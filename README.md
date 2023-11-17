@@ -3,4 +3,4 @@ This is the shared repository of exercise group 6.2 for the web application assi
 
 This is the description of the group number 6.2, we will focus on making a facility management tool for HSG students.
 
-Here is how it works:
+Here is how it works: This is our app
