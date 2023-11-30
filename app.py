@@ -22,7 +22,7 @@ c.execute('''
 conn.commit()
 
 def submission_form():
-    st.header("HSG Reporting Tool - Submission Form")
+    st.header("HSG Facility Management Tool - Submission Form")
 
     # Get user input for the submission form
     name = st.text_input("Name:")
