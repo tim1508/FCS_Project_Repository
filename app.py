@@ -58,7 +58,7 @@ def submission_form():
     room_number = st.text_input("Room Number:")
 
     # Maze Map with a focus on the University of St. Gallen
-    maze_map_url = "http://use.mazemap.com/embed.html?v=1&zlevel=1&center=9.373611,47.429708&zoom=14.7&campusid=710"
+    maze_map_url = "https://use.mazemap.com/embed.html?v=1&zlevel=1&center=9.373611,47.429708&zoom=14.7&campusid=710"
     st.markdown(f"""
         <iframe src="{maze_map_url}"
             width="100%" height="420" frameborder="0" marginheight="0" marginwidth="0"
