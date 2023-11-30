@@ -1,11 +1,11 @@
 # Group 6.2
+
 import streamlit as st
 import pandas as pd
 import sqlite3
 from captcha.image import ImageCaptcha
 import random, string
 import re
-
 
 # Globale Variablen für das CAPTCHA
 length_captcha = 4  # Länge des Captcha-Codes
@@ -203,4 +203,3 @@ def main():
 
 if __name__ == "__main__":
     main()
- 
