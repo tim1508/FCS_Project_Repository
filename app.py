@@ -28,6 +28,16 @@ def submission_form():
     name = st.text_input("Name:")
     hsg_email = st.text_input("HSG Email Address:")
 
+    # Check wheter the specified email address is a real hsg mail address
+    def is_valid_email(hsg_email):
+        hsg_email_pattern = r'^[\w.]+@unisg\.ch$'
+        match = re.match(pattern, hsg_email)
+        return bool(match)
+
+    # Returning an error when the mail address is invalid
+    if not is is_valid_email(hsg_email):
+        st.error("Invalid mail address. Please check that you have entered your hsg mail address correctly.")
+
     # Room number input
     room_number = st.text_input("Room Number:")
 
@@ -38,12 +48,6 @@ def submission_form():
             width="100%" height="420" frameborder="0" marginheight="0" marginwidth="0"
             scrolling="no"></iframe>
     """, unsafe_allow_html=True)
-
-# Check wheter the  specified email address is a real HSG address
-    def is_valid_hsg_email(hsg_email):
-        pattern = r'^\S+@unisg\.ch$'
-        match = re.match(pattern, hsg_email)
-        return bool(match)
 
     # Issue Type checkboxes
     st.subheader("Issue Type:")
@@ -60,25 +64,25 @@ def submission_form():
             st.error("Please fill out all fields before submitting.")
 
             if not is_valid_hsg_email(hsg_email):
-                st.error("Invalid mail address. Please enter your HSG-address.")
+            st.error("Invalid mail address. Please enter your HSG-address.")
 
-        else:
+            else
             # Determine the selected issue type(s)
                 selected_issue_types = []
                 if it_problem:
-                    selected_issue_types.append("IT Problem")
+                selected_issue_types.append("IT Problem")
                 if missing_material:
-                    selected_issue_types.append("Missing Material")
+                selected_issue_types.append("Missing Material")
                 if non_functioning_facilities:
-                    selected_issue_types.append("Non-functioning Facilities")
+                selected_issue_types.append("Non-functioning Facilities")
 
-            # Insert the submission into the database
-                c.execute('''
-                INSERT INTO submissions (name, hsg_email, issue_type, room_number, importance)
-                VALUES (?, ?, ?, ?, ?)
-                ''', (name, hsg_email, ', '.join(selected_issue_types), room_number, importance))
-                conn.commit()
-                t.success("Submission Successful!")
+        # Insert the submission into the database
+        c.execute('''
+            INSERT INTO submissions (name, hsg_email, issue_type, room_number, importance)
+            VALUES (?, ?, ?, ?, ?)
+        ''', (name, hsg_email, ', '.join(selected_issue_types), room_number, importance))
+        conn.commit()
+        st.success("Submission Successful!")
 
 def submitted_issues():
     st.header("HSG Reporting Tool - Submitted Issues")
@@ -111,5 +115,4 @@ def main():
         submitted_issues()
 
 if __name__ == "__main__":
-    main() 
-
+    main()
