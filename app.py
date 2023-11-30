@@ -60,17 +60,17 @@ def submission_form():
             st.error("Please fill out all fields before submitting.")
 
             if not is_valid_hsg_email(hsg_email):
-            st.error("Invalid mail address. Please enter your HSG-address.")
+                st.error("Invalid mail address. Please enter your HSG-address.")
 
-            else
+        else:
             # Determine the selected issue type(s)
                 selected_issue_types = []
                 if it_problem:
-                selected_issue_types.append("IT Problem")
+                    selected_issue_types.append("IT Problem")
                 if missing_material:
-                selected_issue_types.append("Missing Material")
+                    selected_issue_types.append("Missing Material")
                 if non_functioning_facilities:
-                selected_issue_types.append("Non-functioning Facilities")
+                    selected_issue_types.append("Non-functioning Facilities")
 
             # Insert the submission into the database
                 c.execute('''
