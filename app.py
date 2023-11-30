@@ -28,7 +28,7 @@ st.write("")
 st.write("")
 
 def submission_form():
-    st.header("HSG Reporting Tool - Submission Form")
+    st.header("Submission Form")
 
     # Get user input for the submission form
     name = st.text_input("Name:")
@@ -126,7 +126,7 @@ def submission_form():
         st.success("Submission Successful!")
 
 def submitted_issues():
-    st.header("HSG Reporting Tool - Submitted Issues")
+    st.header("Submitted Issues")
 
     # Retrieve submitted data from the database
     submitted_data = pd.read_sql('SELECT * FROM submissions', conn)
