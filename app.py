@@ -26,6 +26,7 @@ image_path = "hsg-logo.png"
 st.image(image_path, use_column_width=True)
 st.write("")
 st.write("")
+st.write("")
 
 def submission_form():
     st.header("Submission Form")
