@@ -48,12 +48,6 @@ def submission_form():
             width="100%" height="420" frameborder="0" marginheight="0" marginwidth="0"
             scrolling="no"></iframe>
     """, unsafe_allow_html=True)
-
-    # Check wheter the  specified email address is a real HSG address
-    def is_valid_hsg_email(hsg_email):
-        hsg_email_pattern = r'^\S+@unisg\.ch$'
-        match = re.match(hsg_email_pattern, hsg_email)
-        return bool(match)
     
     # Issue Type checkboxes
     st.subheader("Issue Type:")
@@ -85,7 +79,7 @@ def submission_form():
 
         if not (name and hsg_email and room_number and importance and (it_problem or missing_material or non_functioning_facilities)):
             st.error("Please fill out all fields before submitting.")
-            if not is_valid_hsg_email(hsg_email):
+            if not is_valid_email(hsg_email):
                 st.error("Invalid mail address. Please enter your HSG-address.")
 
             else:
