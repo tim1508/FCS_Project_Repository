@@ -2,14 +2,7 @@
 import streamlit as st
 import pandas as pd
 import sqlite3
-from captcha.image import ImageCaptcha
-import random, string
 import re
-
-# Globale Variablen für das CAPTCHA
-length_captcha = 4  # Länge des Captcha-Codes
-width = 200         # Breite des Captcha-Bildes
-height = 150        # Höhe des Captcha-Bildes
 
 # Create a SQLite database connection
 conn = sqlite3.connect('hsg_reporting.db')
@@ -28,48 +21,6 @@ c.execute('''
 ''')
 conn.commit()
 
-# Beginn des hinzugefügten CAPTCHA-Codes
-# ----------------------------------------------------------------------------------
-# Hier definieren Sie die captcha_control Funktion
-def captcha_control():
-    # control if the captcha is correct
-    if 'controllo' not in st.session_state or st.session_state['controllo'] == False:
-        st.title("Captcha Control on Streamlit")
-        
-        # define the session state for control if the captcha is correct
-        st.session_state['controllo'] = False
-        col1, col2 = st.columns(2)
-        
-        # define the session state for the captcha text because it doesn't change during refreshes 
-        if 'Captcha' not in st.session_state:
-            st.session_state['Captcha'] = ''.join(random.choices(string.ascii_uppercase + string.digits, k=length_captcha))
-        print("the captcha is: ", st.session_state['Captcha'])
-        
-        # setup the captcha widget
-        image = ImageCaptcha(width=width, height=height)
-        data = image.generate(st.session_state['Captcha'])
-        col1.image(data)
-        captcha_text = col2.text_input('Enter captcha text here')
-        
-        # verify captcha
-        if col2.button("Verify"):
-            if st.session_state['Captcha'].lower() == captcha_text.lower().strip():
-                # Captcha is correct, set the flag to True
-                st.session_state['controllo'] = True
-                st.experimental_rerun() 
-            else:
-                # Captcha is incorrect, show an error
-                st.error("🚨 The captcha code is incorrect, please try again")
-                # Reset the captcha to force the user to try again
-                del st.session_state['Captcha']
-                del st.session_state['controllo']
-                st.experimental_rerun()
-    else:
-        # If the captcha is already solved, do nothing
-        pass
-# Ende des hinzugefügten CAPTCHA-Codes
-# ----------------------------------------------------------------------------------
-
 def submission_form():
     st.header("HSG Reporting Tool - Submission Form")
 
@@ -80,7 +31,7 @@ def submission_form():
     # Check wheter the specified email address is a real hsg mail address
     def is_valid_email(hsg_email):
         hsg_email_pattern = r'^[\w.]+@unisg\.ch$'
-        match = re.match(pattern, hsg_email)
+        match = re.match(hsg_email_pattern, hsg_email)
         return bool(match)
 
     # Returning an error when the mail address is invalid
@@ -100,8 +51,8 @@ def submission_form():
 
     # Check wheter the  specified email address is a real HSG address
     def is_valid_hsg_email(hsg_email):
-        pattern = r'^\S+@unisg\.ch$'
-        match = re.match(pattern, hsg_email)
+        hsg_email_pattern = r'^\S+@unisg\.ch$'
+        match = re.match(hsg_email_pattern, hsg_email)
         return bool(match)
     
     # Issue Type checkboxes
@@ -115,21 +66,15 @@ def submission_form():
     
     # Wenn der Benutzer auf "Submit" klickt
     if st.button("Submit"):
-        # CAPTCHA-Validierung
-        if 'controllo' not in st.session_state or st.session_state['controllo'] == False:
-            captcha_control()
-            st.stop()  # Stoppt die Ausführung des weiteren Codes, bis das CAPTCHA gelöst ist
-    
-    # Wenn das CAPTCHA gelöst ist, verarbeiten Sie die eingegebenen Daten
         else:
             selected_issue_types = []
-            if it_problem:
-                selected_issue_types.append("IT Problem")
-            if missing_material:
+        if it_problem:
+            selected_issue_types.append("IT Problem")
+        if missing_material:
                 selected_issue_types.append("Missing Material")
-            if non_functioning_facilities:
+        if non_functioning_facilities:
                 selected_issue_types.append("Non-functioning Facilities")
-            issue_types = ', '.join(selected_issue_types)
+        issue_types = ', '.join(selected_issue_types)
         
         # Daten in die Datenbank einfügen
             c.execute('''
