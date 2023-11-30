@@ -21,9 +21,11 @@ c.execute('''
 ''')
 conn.commit() 
 
-# HSG Logo on top of the page
+# HSG Logo on top of the page with space afterwords
 image_path = "hsg-logo.png"
 st.image(image_path, use_column_width=True)
+st.markdown
+st.markdown
 
 def submission_form():
     st.header("HSG Reporting Tool - Submission Form")
