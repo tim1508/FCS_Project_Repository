@@ -1,5 +1,4 @@
 # Group 6.2
-
 import streamlit as st
 import pandas as pd
 import sqlite3
@@ -35,7 +34,7 @@ conn.commit()
 def captcha_control():
     # control if the captcha is correct
     if 'controllo' not in st.session_state or st.session_state['controllo'] == False:
-        st.title("Captcha Control on Streamlit🤗")
+        st.title("Captcha Control on Streamlit")
         
         # define the session state for control if the captcha is correct
         st.session_state['controllo'] = False
