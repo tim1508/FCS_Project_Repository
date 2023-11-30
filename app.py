@@ -66,7 +66,6 @@ def submission_form():
     
     # Wenn der Benutzer auf "Submit" klickt
     if st.button("Submit"):
-        else:
         selected_issue_types = []
         if it_problem:
             selected_issue_types.append("IT Problem")
