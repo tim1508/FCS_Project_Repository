@@ -19,7 +19,7 @@ c.execute('''
         importance TEXT
     )
 ''')
-conn.commit()
+conn.commit() 
 
 def submission_form():
     st.header("HSG Reporting Tool - Submission Form")
