@@ -30,9 +30,12 @@ def submission_form():
 
     # Check wheter the specified email address is a real hsg mail address
     def is_valid_email(hsg_email):
-        hsg_email_pattern = r'^[\w.]+@unisg\.ch$'
-        match = re.match(hsg_email_pattern, hsg_email)
-        return bool(match)
+        if hsg_email:
+            hsg_email_pattern = r'^[\w.]+@unisg\.ch$'
+            match = re.match(hsg_email_pattern, hsg_email)
+            return bool(match)
+        else:
+            return True
 
     # Returning an error when the mail address is invalid
     if not is_valid_email(hsg_email):
