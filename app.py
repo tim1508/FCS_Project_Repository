@@ -2,6 +2,7 @@
 import streamlit as st
 import pandas as pd
 import sqlite3
+import re
 
 # Create a SQLite database connection
 conn = sqlite3.connect('hsg_reporting.db')
@@ -38,6 +39,12 @@ def submission_form():
             scrolling="no"></iframe>
     """, unsafe_allow_html=True)
 
+# Check wheter the  specified email address is a real HSG address
+    def is_valid_hsg_email(hsg_email):
+        pattern = r'^\S+@unisg\.ch$'
+        match = re.match(pattern, hsg_email)
+        return bool(match)
+
     # Issue Type checkboxes
     st.subheader("Issue Type:")
     it_problem = st.checkbox("IT Problem")
@@ -49,22 +56,29 @@ def submission_form():
 
     # Submit button
     if st.button("Submit"):
-        # Determine the selected issue type(s)
-        selected_issue_types = []
-        if it_problem:
-            selected_issue_types.append("IT Problem")
-        if missing_material:
-            selected_issue_types.append("Missing Material")
-        if non_functioning_facilities:
-            selected_issue_types.append("Non-functioning Facilities")
+        if not (name and hsg_email and room_number and importance and (it_problem or missing_material or non_functioning_facilities)):
+            st.error("Please fill out all fields before submitting.")
 
-        # Insert the submission into the database
-        c.execute('''
-            INSERT INTO submissions (name, hsg_email, issue_type, room_number, importance)
-            VALUES (?, ?, ?, ?, ?)
-        ''', (name, hsg_email, ', '.join(selected_issue_types), room_number, importance))
-        conn.commit()
-        st.success("Submission Successful!")
+            if not is_valid_hsg_email(hsg_email):
+            st.error("Invalid mail address. Please enter your HSG-address.")
+
+            else
+            # Determine the selected issue type(s)
+                selected_issue_types = []
+                if it_problem:
+                selected_issue_types.append("IT Problem")
+                if missing_material:
+                selected_issue_types.append("Missing Material")
+                if non_functioning_facilities:
+                selected_issue_types.append("Non-functioning Facilities")
+
+            # Insert the submission into the database
+                c.execute('''
+                INSERT INTO submissions (name, hsg_email, issue_type, room_number, importance)
+                VALUES (?, ?, ?, ?, ?)
+                ''', (name, hsg_email, ', '.join(selected_issue_types), room_number, importance))
+                conn.commit()
+                t.success("Submission Successful!")
 
 def submitted_issues():
     st.header("HSG Reporting Tool - Submitted Issues")
@@ -98,3 +112,4 @@ def main():
 
 if __name__ == "__main__":
     main() 
+
