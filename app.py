@@ -36,7 +36,7 @@ def submission_form():
 
     # Returning an error when the mail address is invalid
     if not is_valid_email(hsg_email):
-        st.error("Invalid mail address. Please check that you have entered your hsg mail address correctly.")
+        st.error("Invalid mail address. Please check that you have entered your HSG mail address correctly.")
 
     # Room number input
     room_number = st.text_input("Room Number:")
