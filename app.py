@@ -3,7 +3,6 @@ import streamlit as st
 import pandas as pd
 import sqlite3
 import re
-from PIL import image
 
 # Create a SQLite database connection
 conn = sqlite3.connect('hsg_reporting.db')
