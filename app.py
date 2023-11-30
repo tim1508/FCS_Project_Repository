@@ -67,7 +67,7 @@ def submission_form():
     # Wenn der Benutzer auf "Submit" klickt
     if st.button("Submit"):
         else:
-            selected_issue_types = []
+        selected_issue_types = []
         if it_problem:
             selected_issue_types.append("IT Problem")
         if missing_material:
@@ -77,12 +77,12 @@ def submission_form():
         issue_types = ', '.join(selected_issue_types)
         
         # Daten in die Datenbank einfügen
-            c.execute('''
+        c.execute('''
                 INSERT INTO submissions (name, hsg_email, issue_type, room_number, importance)
                 VALUES (?, ?, ?, ?, ?)
             ''', (name, hsg_email, issue_types, room_number, importance))
-            conn.commit()
-            st.success("Submission Successful!")
+        conn.commit()
+        st.success("Submission Successful!")
 
         if not (name and hsg_email and room_number and importance and (it_problem or missing_material or non_functioning_facilities)):
             st.error("Please fill out all fields before submitting.")
