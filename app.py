@@ -21,7 +21,7 @@ c.execute('''
 ''')
 conn.commit() 
 
-# HSG Logo on top of the page with space afterwords
+# HSG Logo on top of the page with spaces afterwards
 image_path = "hsg-logo.png"
 st.image(image_path, use_column_width=True)
 st.write("")
@@ -35,7 +35,7 @@ def submission_form():
     name = st.text_input("Name:")
     hsg_email = st.text_input("HSG Email Address:")
 
-    # Check wheter the specified email address is a real hsg mail address
+    # Check whether the specified email address is a real hsg mail address
     def is_valid_email(hsg_email):
         if hsg_email:
             hsg_email_pattern = r'^[\w.]+@(student\.)?unisg\.ch$'
@@ -66,7 +66,6 @@ def submission_form():
             scrolling="no"></iframe>
     """, unsafe_allow_html=True)
 
-    
     # Issue Type checkboxes
     st.subheader("Issue Type:")
     it_problem = st.checkbox("IT Problem")
@@ -76,7 +75,7 @@ def submission_form():
     # Importance dropdown menu
     importance = st.selectbox("Importance:", ['Low', 'Medium', 'High'])
     
-    # Wenn der Benutzer auf "Submit" klickt
+    # When "Submit" button is clicked
     if st.button("Submit"):
         selected_issue_types = []
         if it_problem:
@@ -87,7 +86,7 @@ def submission_form():
             selected_issue_types.append("Non-functioning Facilities")
             issue_types = ', '.join(selected_issue_types)
         
-        # Daten in die Datenbank einfügen
+        # Import data to databank
             c.execute('''
                 INSERT INTO submissions (name, hsg_email, issue_type, room_number, importance)
                 VALUES (?, ?, ?, ?, ?)
