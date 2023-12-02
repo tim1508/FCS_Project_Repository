@@ -146,52 +146,16 @@ def submitted_issues():
     st.subheader("List of Submitted Issues:")
     st.table(submitted_data)
 
-def overwrite_status():
-    st.header("Overwrite Status")
-
-    # Retrieve submitted data from the database
-    submitted_data = pd.read_sql('SELECT * FROM submissions', conn)
-
-    # Check if the DataFrame is empty
-    if submitted_data.empty:
-        st.subheader("No submitted issues yet.")
-        return
-
-    # Display a selection box to choose the issue to update
-    selected_issue_id = st.selectbox("Select Issue ID to Overwrite Status:", submitted_data['id'].tolist())
-
-    # Display the details of the selected issue
-    selected_issue = submitted_data[submitted_data['id'] == selected_issue_id].iloc[0]
-    st.subheader("Selected Issue Details:")
-    st.write(selected_issue)
-
-    # Display the status update form
-    new_status_options = ['Pending', 'In Progress', 'Resolved']
-    new_status = st.selectbox("Select New Status:", new_status_options)
-
-    # When "Update Status" button is clicked
-    if st.button("Update Status"):
-        # Update the status in the database
-        c.execute('''
-            UPDATE submissions
-            SET status = ?
-            WHERE id = ?
-        ''', (new_status, selected_issue_id))
-        conn.commit()
-        st.success("Status Updated Successfully!")
-
 def main():
     st.title("HSG Reporting Tool")
 
-    # Display the pages on the sidebar
-    page = st.sidebar.radio("Select Page:", ['Submission Form', 'Submitted Issues', 'Overwrite Status'])
+    # Display the pages on the same page without a sidebar
+    page = st.radio("Select Page:", ['Submission Form', 'Submitted Issues'])
 
     if page == 'Submission Form':
         submission_form()
     elif page == 'Submitted Issues':
         submitted_issues()
-    elif page == 'Overwrite Status':
-        overwrite_status()
 
 if __name__ == "__main__":
     main()
