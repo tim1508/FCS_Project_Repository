@@ -18,7 +18,7 @@ c.execute('''
         room_number TEXT,
         importance TEXT,
         submission_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        status TEXT DEFAULT 'Pending'
+        status BOOLEAN DEFAULT 0
     )
 ''')
 conn.commit() 
