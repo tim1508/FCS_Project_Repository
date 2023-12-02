@@ -16,7 +16,9 @@ c.execute('''
         hsg_email TEXT,
         issue_type TEXT,
         room_number TEXT,
-        importance TEXT
+        importance TEXT,
+        submission_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        status TEXT DEFAULT 'Pending'
     )
 ''')
 conn.commit() 
