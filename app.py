@@ -112,20 +112,20 @@ def submitted_issues():
     # Sort the issues by issue type and importance
     submitted_data = submitted_data.sort_values(by=['issue_type', 'importance'], ascending=[True, False])
     # Rename the columns
+    
+    # Set the index to the issue type
+    submitted_data = submitted_data.set_index('issue_type')
+
+    # Change column names
     submitted_data = submitted_data.rename(columns={
         'name': 'NAME',
         'hsg_email': 'HSG MAIL ADDRESS',
-        'issue_type': 'ISSUE TYPE',
         'room_number': 'ROOM NR.',
         'importance': 'IMPORTANCE',
         'submission_time': 'SUBMITTED AT',
         'status': 'STATUS'
     })
-
-    # Set the index to the issue type
-    submitted_data = submitted_data.set_index('issue_type')
-
-
+    
     # Display the list of submitted issues
     st.subheader("List of Submitted Issues:")
     st.table(submitted_data)
