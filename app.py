@@ -112,9 +112,6 @@ def submitted_issues():
     # Sort the issues by issue type and importance
     submitted_data = submitted_data.sort_values(by=['issue_type', 'importance'], ascending=[True, False])
     # Rename the columns
-    
-    # Set the index to the issue type
-    submitted_data = submitted_data.set_index('issue_type')
 
     # Change column names
     submitted_data = submitted_data.rename(columns={
@@ -125,15 +122,20 @@ def submitted_issues():
         'submission_time': 'SUBMITTED AT',
         'status': 'STATUS'
     })
-    
-    # Display the list of submitted issues
-    st.subheader("List of Submitted Issues:")
-    st.table(submitted_data)
 
+    # Set the index to the issue type
+    submitted_data = submitted_data.set_index('issue_type')
     
     # Display the list of submitted issues
     st.subheader("List of Submitted Issues:")
     st.table(submitted_data)
+    
+    # Display the list of submitted issues with bold column names
+    st.subheader("List of Submitted Issues:")
+    st.markdown(submitted_data.style.set_table_styles([{
+        'selector': 'thead th',
+        'props': [('font-weight', 'bold')]
+    }]).render(), unsafe_allow_html=True)
 
 def overwrite_status():
     st.header("Overwrite Status")
