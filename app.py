@@ -125,7 +125,10 @@ def submitted_issues():
 
     # Set the index to the issue type
     submitted_data = submitted_data.set_index('issue_type')
-    
+
+    # Drop the 'id' column
+    submitted_data = submitted_data.drop(columns=['id'])
+
     # Display the list of submitted issues
     st.subheader("List of Submitted Issues:")
     st.table(submitted_data)
