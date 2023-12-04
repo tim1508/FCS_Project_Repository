@@ -98,7 +98,7 @@ def submission_form():
         st.success("Submission Successful!")
 
 def submitted_issues():
-    st.header("Submitted TIssues")
+    st.header("Submitted Issues")
 
     # Retrieve submitted data from the database
     submitted_data = pd.read_sql('SELECT * FROM submissions', conn)
