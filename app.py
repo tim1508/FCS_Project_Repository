@@ -127,7 +127,7 @@ def submitted_issues():
     })
 
     # Set the index to the issue type
-    submitted_data = submitted_data.set_index('ISSUE TYPE')
+    submitted_data = submitted_data.set_index('issue_type')
 
 
     # Display the list of submitted issues
