@@ -129,13 +129,6 @@ def submitted_issues():
     # Display the list of submitted issues
     st.subheader("List of Submitted Issues:")
     st.table(submitted_data)
-    
-    # Display the list of submitted issues with bold column names
-    st.subheader("List of Submitted Issues:")
-    st.markdown(submitted_data.style.set_table_styles([{
-        'selector': 'thead th',
-        'props': [('font-weight', 'bold')]
-    }]).render(), unsafe_allow_html=True)
 
 def overwrite_status():
     st.header("Overwrite Status")
