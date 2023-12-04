@@ -109,9 +109,12 @@ def submitted_issues():
     # Display the counter of total issues
     st.subheader(f"Total Issues: {total_issues}")
 
-    # Sort the issues based on importance in descending order
-    submitted_data = submitted_data.sort_values(by=['importance'], ascending=False)
-
+    # Sort the issues by issue type and importance
+    submitted_data = submitted_data.sort_values(by=['issue_type', 'importance'], ascending=[True, False])
+    
+    # Set the index to the issue type
+    submitted_data = submitted_data.set_index('issue_type')
+    
     # Display the list of submitted issues
     st.subheader("List of Submitted Issues:")
     st.table(submitted_data)
