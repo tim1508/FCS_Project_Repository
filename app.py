@@ -109,26 +109,31 @@ def submitted_issues():
     # Display the counter of total issues
     st.subheader(f"Total Issues: {total_issues}")
     
-    # Dropdown for sorting options
-    sort_option = st.selectbox("Sort by:", ['Issue Type', 'Importance', 'Status'])
+    # Sort the issues by issue type and importance
+    submitted_data = submitted_data.sort_values(by=['issue_type', 'importance'], ascending=[True, False])
+
+    # Set the index to the issue type
+    submitted_data = submitted_data.set_index('issue_type')
     
-    # Define default sorting values
-    sort_columns = ['issue_type', 'importance', 'status']
-    sort_order = [True, False, True]  # Ascending for issue_type and status, descending for importance
+     # Rename the columns
+    submitted_data = submitted_data.rename(columns={
+        'name': 'NAME',
+        'hsg_email': 'HSG MAIL ADDRESS',
+        'issue_type': 'ISSUE TYPE',
+        'room_number': 'ROOM NR.',
+        'importance': 'IMPORTANCE',
+        'submission_time': 'SUBMITTED AT',
+        'status': 'STATUS'
+    })
 
-    # Determine sorting values based on the selected option
-    if sort_option == 'Issue Type':
-        sort_columns = ['issue_type', 'importance', 'status']
-        sort_order = [True, False, True]
-    elif sort_option == 'Importance':
-        sort_columns = ['importance', 'issue_type', 'status']
-        sort_order = [False, True, True]
-    elif sort_option == 'Status':
-        sort_columns = ['status', 'issue_type', 'importance']
-        sort_order = [True, True, False]
+    # Set the index to the issue type
+    submitted_data = submitted_data.set_index('ISSUE TYPE')
 
-    # Sort the issues based on the selected option
-    submitted_data = submitted_data.sort_values(by=sort_columns, ascending=sort_order)
+
+    # Display the list of submitted issues
+    st.subheader("List of Submitted Issues:")
+    st.table(submitted_data)
+
     
     # Display the list of submitted issues
     st.subheader("List of Submitted Issues:")
