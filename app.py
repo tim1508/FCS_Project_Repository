@@ -45,7 +45,7 @@ def is_valid_email(hsg_email):
         return True
         
 def submission_form():
-    st.header("Submission Form")
+    st.header("Submission Form test")
 
     # Get user input for the submission form
     name = st.text_input("Name:")
@@ -81,6 +81,9 @@ def submission_form():
 
     # Importance dropdown menu
     importance = st.selectbox("Importance:", ['Low', 'Medium', 'High'])
+
+    # Comment box
+    comment = st.text_area("Problem Description:", max_chars=500)
 
     # When "Submit" button is clicked
     if st.button("Submit"):
