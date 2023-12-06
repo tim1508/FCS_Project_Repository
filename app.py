@@ -79,18 +79,17 @@ def submission_form():
     missing_material = st.checkbox("Missing Material")
     non_functioning_facilities = st.checkbox("Non-functioning Facilities")
 
-    # Überprüfung, ob mindestens ein Issue-Typ ausgewählt wurde
-    issue_type_selected = it_problem or missing_material or non_functioning_facilities
-
-    # Überprüfung, ob alle erforderlichen Felder ausgefüllt sind (ohne das optionale Foto)
-    all_fields_filled = all([name, hsg_email, room_number, issue_type_selected])
-
     # Importance dropdown menu
     importance = st.selectbox("Importance:", ['Low', 'Medium', 'High'])
 
     # When "Submit" button is clicked
     if st.button("Submit"):
-        
+        # Überprüfung, ob mindestens ein Issue-Typ ausgewählt wurde
+        issue_type_selected = it_problem or missing_material or non_functioning_facilities
+
+        # Überprüfung, ob alle erforderlichen Felder ausgefüllt sind (ohne das optionale Foto)
+        all_fields_filled = all([name, hsg_email, room_number, issue_type_selected])
+
         if all_fields_filled and is_valid_email(hsg_email):
             selected_issue_types = []
             if it_problem:
