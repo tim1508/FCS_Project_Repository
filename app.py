@@ -89,26 +89,28 @@ def submission_form():
     importance = st.selectbox("Importance:", ['Low', 'Medium', 'High'])
 
     # When "Submit" button is clicked
-    if st.button("Submit") and all_fields_filled and is_valid_email(hsg_email):
-        selected_issue_types = []
-        if it_problem:
-            selected_issue_types.append("IT Problem")
-        if missing_material:
-            selected_issue_types.append("Missing Material")
-        if non_functioning_facilities:
-            selected_issue_types.append("Non-functioning Facilities")
-        issue_types = ', '.join(selected_issue_types)
+    if st.button("Submit"):
+        
+        if all_fields_filled and is_valid_email(hsg_email):
+            selected_issue_types = []
+            if it_problem:
+                selected_issue_types.append("IT Problem")
+            if missing_material:
+                selected_issue_types.append("Missing Material")
+            if non_functioning_facilities:
+                selected_issue_types.append("Non-functioning Facilities")
+            issue_types = ', '.join(selected_issue_types)
 
-        # Import data to the database
-        c.execute('''
-            INSERT INTO submissions (name, hsg_email, issue_type, room_number, importance)
-            VALUES (?, ?, ?, ?, ?)
-        ''', (name, hsg_email, issue_types, room_number, importance))
-        conn.commit()
-        st.success("Submission Successful!")
-    else:
-        # Fehlermeldung, wenn nicht alle Bedingungen erfüllt sind
-        st.error("Please fill in all required fields and select at least one issue type.")
+            # Import data to the database
+            c.execute('''
+                INSERT INTO submissions (name, hsg_email, issue_type, room_number, importance)
+                VALUES (?, ?, ?, ?, ?)
+            ''', (name, hsg_email, issue_types, room_number, importance))
+            conn.commit()
+            st.success("Submission Successful!")
+        else:
+            # Fehlermeldung, wenn nicht alle Bedingungen erfüllt sind
+            st.error("Please fill in all required fields and select at least one issue type.")
 
 def submitted_issues():
     st.header("Submitted Issues")
