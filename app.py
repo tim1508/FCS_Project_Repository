@@ -81,6 +81,9 @@ def submission_form():
 
     # Importance dropdown menu
     importance = st.selectbox("Importance:", ['Low', 'Medium', 'High'])
+    
+    #Comment box
+    comment = st.text_area("Problem Description:", max_chars=500)
 
     # When "Submit" button is clicked
     if st.button("Submit"):
