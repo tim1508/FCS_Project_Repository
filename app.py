@@ -45,7 +45,7 @@ def is_valid_email(hsg_email):
         return True
         
 def submission_form():
-    st.header("Submission Form test")
+    st.header("Submission Form")
 
     # Get user input for the submission form
     name = st.text_input("Name:")
