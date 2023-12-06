@@ -35,21 +35,21 @@ st.write("")
 st.write("")
 st.write("")
 
+# Check whether the specified email address is a real HSG mail address
+def is_valid_email(hsg_email):
+    if hsg_email:
+        hsg_email_pattern = r'^[\w.]+@(student\.)?unisg\.ch$'
+        match = re.match(hsg_email_pattern, hsg_email)
+        return bool(match)
+    else:
+        return True
+        
 def submission_form():
     st.header("Submission Form")
 
     # Get user input for the submission form
     name = st.text_input("Name:")
     hsg_email = st.text_input("HSG Email Address:")
-
-    # Check whether the specified email address is a real HSG mail address
-    def is_valid_email(hsg_email):
-        if hsg_email:
-            hsg_email_pattern = r'^[\w.]+@(student\.)?unisg\.ch$'
-            match = re.match(hsg_email_pattern, hsg_email)
-            return bool(match)
-        else:
-            return True
 
     # Returning an error when the mail address is invalid
     if not is_valid_email(hsg_email):
