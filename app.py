@@ -36,7 +36,7 @@ st.write("")
 st.write("")
 
 def submission_form():
-    st.header("Submission Test Form")
+    st.header("Submission Form")
 
     # Get user input for the submission form
     name = st.text_input("Name:")
