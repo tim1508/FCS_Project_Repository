@@ -22,6 +22,7 @@ c.execute('''
         issue_type TEXT,
         room_number TEXT,
         importance TEXT,
+        user_comment TEXT,
         submission_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         status TEXT DEFAULT 'Pending'
     )
@@ -137,6 +138,7 @@ def submitted_issues():
         'room_number': 'ROOM NR.',
         'importance': 'IMPORTANCE',
         'submission_time': 'SUBMITTED AT',
+        'user_comment': 'PROBLEM DESCRIPTION',
         'status': 'STATUS'
     })
 
