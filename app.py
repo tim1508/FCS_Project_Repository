@@ -83,7 +83,7 @@ def submission_form():
     importance = st.selectbox("Importance:", ['Low', 'Medium', 'High'])
     
     #Comment box
-    comment = st.text_area("Problem Description:", max_chars=500)
+    user_comment = st.text_area("Problem Description:", max_chars=500)
 
     # When "Submit" button is clicked
     if st.button("Submit"):
@@ -91,7 +91,7 @@ def submission_form():
         issue_type_selected = it_problem or missing_material or non_functioning_facilities
 
         # Überprüfung, ob alle erforderlichen Felder ausgefüllt sind (ohne das optionale Foto)
-        all_fields_filled = all([name, hsg_email, room_number, issue_type_selected])
+        all_fields_filled = all([name, hsg_email, room_number, issue_type_selected, user_comment])
 
         if all_fields_filled and is_valid_email(hsg_email):
             selected_issue_types = []
