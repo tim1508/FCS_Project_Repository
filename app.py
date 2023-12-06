@@ -22,7 +22,6 @@ c.execute('''
         issue_type TEXT,
         room_number TEXT,
         importance TEXT,
-        user_comment TEXT,
         submission_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         status TEXT DEFAULT 'Pending'
     )
@@ -106,9 +105,9 @@ def submission_form():
 
             # Import data to the database
             c.execute('''
-                INSERT INTO submissions (name, hsg_email, issue_type, room_number, importance, user_comment)
+                INSERT INTO submissions (name, hsg_email, issue_type, room_number, importance)
                 VALUES (?, ?, ?, ?, ?)
-            ''', (name, hsg_email, issue_types, room_number, importance, user_comment))
+            ''', (name, hsg_email, issue_types, room_number, importance ))
             conn.commit()
             st.success("Submission Successful!")
         else:
@@ -138,7 +137,6 @@ def submitted_issues():
         'room_number': 'ROOM NR.',
         'importance': 'IMPORTANCE',
         'submission_time': 'SUBMITTED AT',
-        'user_comment': 'PROBLEM DESCRIPTION',
         'status': 'STATUS'
     })
 
