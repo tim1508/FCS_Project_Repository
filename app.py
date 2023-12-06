@@ -11,8 +11,7 @@ conn = sqlite3.connect('hsg_reporting.db')
 c = conn.cursor()
 
 # Insert correct time zone
-correct_timezone = pytz.timezone('Europe/Zurich')
-current_time_st_gallen = datetime.now(st_gallen_timezone)
+
 
 # Create a table to store submitted data
 c.execute('''
