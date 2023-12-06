@@ -107,9 +107,8 @@ def submission_form():
         conn.commit()
         st.success("Submission Successful!")
     else:
-         if st.button("Submit"):
         # Fehlermeldung, wenn nicht alle Bedingungen erfüllt sind
-            st.error("Please fill in all required fields and select at least one issue type.")
+        st.error("Please fill in all required fields and select at least one issue type.")
 
 def submitted_issues():
     st.header("Submitted Issues")
