@@ -107,7 +107,7 @@ def submission_form():
             c.execute('''
                 INSERT INTO submissions (name, hsg_email, issue_type, room_number, importance)
                 VALUES (?, ?, ?, ?, ?)
-            ''', (name, hsg_email, issue_types, room_number, importance ))
+            ''', (name, hsg_email, issue_types, room_number, importance))
             conn.commit()
             st.success("Submission Successful!")
         else:
