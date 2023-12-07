@@ -175,8 +175,15 @@ def overwrite_status():
 
     # When "Update Status" button is clicked
     if st.button("Update Status"):
+        # Implement 'Europe/Zurich' as the standard time zone for the application
+        desired_time_zone = pytz.timezone('Europe/Zurich')
+
+        # Implement datetime.now() with the selected time zone (Zurich)
+        submission_time = datetime.now(desired_time_zone).strftime("%Y-%m-%d %H:%M:%S")
+
+
         # Update the status and timestamp in the database
-        submission_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    
         c.execute('''
             UPDATE submissions
             SET status = ?, submission_time = ?
