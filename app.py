@@ -11,7 +11,6 @@ conn = sqlite3.connect('hsg_reporting.db')
 c = conn.cursor()
 
 # Insert correct time zone
-st.set_page_config(timezone='Europe/Zurich')
 
 # Create a table to store submitted data
 c.execute('''
