@@ -150,9 +150,20 @@ def submitted_issues():
     st.subheader("List of Submitted Issues:")
     st.table(submitted_data)
 
+# Set a password for accessing the "Overwrite Status" page
+correct_password = "Group62"
+
 def overwrite_status():
     st.header("Overwrite Status")
 
+    # Password protection for the "Overwrite Status" page
+    entered_password = st.sidebar.text_input("Enter Password", "", type="password")
+
+    if entered_password != correct_password:
+        st.warning("Incorrect password. Please enter the correct password to access this page.")
+        return
+
+    # Continue with the rest of the function if the correct password is entered
     # Retrieve submitted data from the database
     submitted_data = pd.read_sql('SELECT * FROM submissions', conn)
 
@@ -181,9 +192,7 @@ def overwrite_status():
         # Implement datetime.now() with the selected time zone (Zurich)
         submission_time = datetime.now(desired_time_zone).strftime("%Y-%m-%d %H:%M:%S")
 
-
         # Update the status and timestamp in the database
-    
         c.execute('''
             UPDATE submissions
             SET status = ?, submission_time = ?
