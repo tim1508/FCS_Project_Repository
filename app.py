@@ -11,6 +11,7 @@ conn = sqlite3.connect('hsg_reporting.db')
 c = conn.cursor()
 
 # Insert correct time zone
+st.time_zone = 'Europe/Zurich'
 
 # Create a table to store submitted data
 c.execute('''
@@ -86,10 +87,10 @@ def submission_form():
 
     # When "Submit" button is clicked
     if st.button("Submit"):
-        # Überprüfung, ob mindestens ein Issue-Typ ausgewählt wurde
+        # Checking that at least one issue type is selected
         issue_type_selected = it_problem or missing_material or non_functioning_facilities
 
-        # Überprüfung, ob alle erforderlichen Felder ausgefüllt sind (ohne das optionale Foto)
+        # Checking if all required fiellds are filled out
         all_fields_filled = all([name, hsg_email, room_number, issue_type_selected, user_comment])
 
         if all_fields_filled and is_valid_email(hsg_email):
@@ -110,7 +111,7 @@ def submission_form():
             conn.commit()
             st.success("Submission Successful!")
         else:
-            # Fehlermeldung, wenn nicht alle Bedingungen erfüllt sind
+            # Error if not all fields are filled out
             st.error("Please fill in all required fields and select at least one issue type.")
 
 def submitted_issues():
@@ -175,9 +176,9 @@ def overwrite_status():
     # When "Update Status" button is clicked
     if st.button("Update Status"):
         # Implement 'Europe/Zurich' as the standard time zone for the application
+        desired_time_zone = pytz.timezone('Europe/Zurich')
 
         # Implement datetime.now() with the selected time zone (Zurich)
-        desired_time_zone = pytz.timezone('Europe/Zurich')
         submission_time = datetime.now(desired_time_zone).strftime("%Y-%m-%d %H:%M:%S")
 
 
