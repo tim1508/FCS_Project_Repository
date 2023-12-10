@@ -82,7 +82,7 @@ def submission_form():
     # Importance dropdown menu
     importance = st.selectbox("Importance:", ['Low', 'Medium', 'High'])
     
-    #Comment box
+    # Comment box
     user_comment = st.text_area("Problem Description:", max_chars=500)
 
     # When "Submit" button is clicked
@@ -90,7 +90,7 @@ def submission_form():
         # Checking that at least one issue type is selected
         issue_type_selected = it_problem or missing_material or non_functioning_facilities
 
-        # Checking if all required fiellds are filled out
+        # Checking if all required fields are filled out
         all_fields_filled = all([name, hsg_email, room_number, issue_type_selected, user_comment])
 
         if all_fields_filled and is_valid_email(hsg_email):
@@ -103,16 +103,23 @@ def submission_form():
                 selected_issue_types.append("Non-functioning Facilities")
             issue_types = ', '.join(selected_issue_types)
 
+            # Implement 'Europe/Zurich' as the standard time zone for the application
+            desired_time_zone = pytz.timezone('Europe/Zurich')
+
+            # Implement datetime.now() with the selected time zone (Zurich)
+            submission_time = datetime.now(desired_time_zone).strftime("%Y-%m-%d %H:%M:%S")
+
             # Import data to the database
             c.execute('''
-                INSERT INTO submissions (name, hsg_email, issue_type, room_number, importance)
-                VALUES (?, ?, ?, ?, ?)
-            ''', (name, hsg_email, issue_types, room_number, importance))
+                INSERT INTO submissions (name, hsg_email, issue_type, room_number, importance, submission_time)
+                VALUES (?, ?, ?, ?, ?, ?)
+            ''', (name, hsg_email, issue_types, room_number, importance, submission_time))
             conn.commit()
             st.success("Submission Successful!")
         else:
             # Error if not all fields are filled out
             st.error("Please fill in all required fields and select at least one issue type.")
+
 
 def submitted_issues():
     st.header("Submitted Issues")
