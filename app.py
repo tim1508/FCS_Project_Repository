@@ -6,7 +6,8 @@ from datetime import datetime
 import pytz
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
-import smtplib  # Added import for sending emails
+import smtplib  
+# Added import for sending emails
 import streamlit as st
 
 
