@@ -1,3 +1,5 @@
 streamlit
 pandas
 captcha==0.5.0
+streamlit==0.89.0
+matplotlib==3.4.3
