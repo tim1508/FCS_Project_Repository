@@ -198,8 +198,13 @@ def submitted_issues():
     color = 'darkgreen'
 
     fig, ax = plt.subplots()
-    ax.bar(issues_per_day.index, issues_per_day.values, width=0.3, align='center', color=color, alpha=0.7)  # Adjusted width and added alpha for transparency
+    ax.bar(issues_per_day.index, issues_per_day.values, width=0.7, align='center', color=color, alpha=0.7)  # Adjusted width and added alpha for transparency
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
+
+    # Adjust spacing between bars
+    bar_width = 1  # Adjust the width based on your preference
+    ax.xaxis.set_major_locator(mdates.DayLocator(interval=1))  # Set the interval to control spacing
+    ax.xaxis.set_minor_locator(mdates.DayLocator())
 
     # Rotate the date labels for better readability
     plt.xticks(rotation=45, ha='right')
