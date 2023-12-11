@@ -75,14 +75,12 @@ def submission_form():
     """, unsafe_allow_html=True)
 
     # Issue Type checkboxes
-    #st.subheader("Issue Type:")
-    #it_problem = st.checkbox("IT Problem")
-    #missing_material = st.checkbox("Missing Material")
-    #non_functioning_facilities = st.checkbox("Non-functioning Facilities")
+    st.subheader("Issue Type:")
+    it_problem = st.checkbox("IT Problem")
+    missing_material = st.checkbox("Missing Material")
+    non_functioning_facilities = st.checkbox("Non-functioning Facilities")
     
-    st.subheader("Issue Type 2:")
-    issue_types = st.radio("Select Issue Type:",["IT Problem", "Missing Material", "Non-functioning Facilities"])
-
+    
     # Importance dropdown menu
     importance = st.selectbox("Importance:", ['Low', 'Medium', 'High'])
     
@@ -92,7 +90,7 @@ def submission_form():
     # When "Submit" button is clicked
     if st.button("Submit"):
         # Checking that at least one issue type is selected
-        #issue_type_selected = it_problem or missing_material or non_functioning_facilities
+        issue_type_selected = it_problem or missing_material or non_functioning_facilities
 
         # Checking if all required fields are filled out
         all_fields_filled = all([name, hsg_email, room_number, issue_type_selected, user_comment])
