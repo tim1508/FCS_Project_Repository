@@ -75,10 +75,10 @@ def submission_form():
     """, unsafe_allow_html=True)
 
     # Issue Type checkboxes
-    st.subheader("Issue Type:")
-    it_problem = st.checkbox("IT Problem")
-    missing_material = st.checkbox("Missing Material")
-    non_functioning_facilities = st.checkbox("Non-functioning Facilities")
+    #st.subheader("Issue Type:")
+    #it_problem = st.checkbox("IT Problem")
+    #missing_material = st.checkbox("Missing Material")
+    #non_functioning_facilities = st.checkbox("Non-functioning Facilities")
     
     st.subheader("Issue Type 2:")
     issue_types = st.radio("Select Issue Type:"["IT Problem", "Missing Material", "Non-functioning Facilities"])
