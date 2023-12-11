@@ -79,6 +79,8 @@ def submission_form():
     it_problem = st.checkbox("IT Problem")
     missing_material = st.checkbox("Missing Material")
     non_functioning_facilities = st.checkbox("Non-functioning Facilities")
+    
+    st.subheader("Issue Type 2:")
     issue_types = st.radios("Select Issue Type:"["IT Problem", "Missing Material", "Non-functioning Facilities"])
 
     # Importance dropdown menu
