@@ -1,5 +1,4 @@
 # Group 6.2
-import streamlit as st
 import pandas as pd
 import sqlite3
 import re
@@ -8,6 +7,7 @@ import pytz
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import smtplib  # Added import for sending emails
+import streamlit as st
 
 
 # Create a SQLite database connection
