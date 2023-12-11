@@ -194,16 +194,26 @@ def submitted_issues():
     submitted_data['Date'] = submitted_data['SUBMITTED AT'].dt.date
     issues_per_day = submitted_data.groupby('Date').size()
 
+    # Set the color to dark green
+    color = 'darkgreen'
+
     fig, ax = plt.subplots()
-    ax.bar(issues_per_day.index, issues_per_day.values, width=0.1, align='center')
+    ax.bar(issues_per_day.index, issues_per_day.values, width=0.7, align='center', color=color, alpha=0.7)  # Adjusted width and added alpha for transparency
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
-    
+
     # Rotate the date labels for better readability
     plt.xticks(rotation=45, ha='right')
 
     ax.set_xlabel("Date")
     ax.set_ylabel("Number of Issues Submitted")
     ax.set_title("Issues Submitted per Day")
+
+    # Add grid lines for better visualization
+    ax.grid(axis='y', linestyle='--', alpha=0.7)
+
+    # Add a background color for better contrast
+    ax.set_facecolor('#f0f0f0')  # Light gray background color
+
     st.pyplot(fig)
 
     # Create a bar chart for the number of issues per importance level
