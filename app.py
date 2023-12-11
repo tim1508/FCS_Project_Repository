@@ -83,7 +83,7 @@ def submission_form():
     st.subheader("Issue Type:")
     lighting_issues = st.checkbox("Lighting issues")
     sanitary_problems = st.checkbox("Sanitary problems")
-    havc_issues = st.checkbox("Heating, ventilation and air conditioning (HAVC) issues")
+    havc_issues = st.checkbox("Heating, ventilation or air conditioning issues")
     cleaning_needs = st.checkbox("Cleaning needs due to heavy soiling")
     network_internet_problems = st.checkbox("Network/internet problems")
     it_equipment = st.checkbox("Issues with/lack of IT equipment")
@@ -108,7 +108,7 @@ def submission_form():
             if sanitary_problems:
                 selected_issue_types.append("Sanitary problems")
             if havc_issues:
-                selected_issue_types.append("Heating, ventilation and air conditioning (HAVC) issues")
+                selected_issue_types.append("Heating, ventilation or air conditioning issues")
             if cleaning_needs:
                 selected_issue_types.append("Cleaning needs due to heavy soiling")
             if network_internet_problems:
