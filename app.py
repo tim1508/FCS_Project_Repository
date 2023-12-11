@@ -49,7 +49,7 @@ def submission_form():
     st.header("Submission Form")
 
     # Get user input for the submission form
-    name = st.text_input("Name:")
+    name = st.text_input("Name test:")
     hsg_email = st.text_input("HSG Email Address:")
 
     # Returning an error when the mail address is invalid
