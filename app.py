@@ -168,7 +168,7 @@ def overwrite_status():
     # Password protection for the "Overwrite Status" page
     entered_password = st.sidebar.text_input("Enter Password", "", type="password")
 
-    if entered_password != correct_password:
+    if entered_password != correct_password and entered_password != '':
         st.warning("Incorrect password. Please enter the correct password to access this page.")
         return
 
