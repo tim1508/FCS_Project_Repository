@@ -81,9 +81,12 @@ def submission_form():
 
     # Issue Type checkboxes
     st.subheader("Issue Type:")
-    it_problem = st.checkbox("IT Problem")
-    missing_material = st.checkbox("Missing Material")
-    non_functioning_facilities = st.checkbox("Non-functioning Facilities")
+    lighting_issues = st.checkbox("Lighting issues")
+    sanitary_problems = st.checkbox("Sanitary problems")
+    havc_issues = st.checkbox("Heating, ventilation and air conditioning (HAVC) issues")
+    cleaning_needs = st.checkbox("Cleaning needs due to heavy soiling")
+    network_internet_problems = st.checkbox("Network/internet problems")
+    it_equipment = ("Issues with/lack of IT equipment")
 
     # Importance dropdown menu
     importance = st.selectbox("Importance:", ['Low', 'Medium', 'High'])
@@ -94,19 +97,24 @@ def submission_form():
     # When "Submit" button is clicked
     if st.button("Submit"):
         # Checking that at least one issue type is selected
-        issue_type_selected = it_problem or missing_material or non_functioning_facilities
-
+        issue_type_selected = lighting_issues or sanitary_problems or havc_issues or cleaning_needs or network_internet_problems or it_equipment
         # Checking if all required fields are filled out
         all_fields_filled = all([name, hsg_email, room_number, issue_type_selected, user_comment])
 
         if all_fields_filled and is_valid_email(hsg_email):
             selected_issue_types = []
-            if it_problem:
-                selected_issue_types.append("IT Problem")
-            if missing_material:
-                selected_issue_types.append("Missing Material")
-            if non_functioning_facilities:
-                selected_issue_types.append("Non-functioning Facilities")
+            if lighting_issues:
+                selected_issue_types.append("Lighting issues")
+            if sanitary_problems:
+                selected_issue_types.append("Sanitary problems")
+            if havc_issues:
+                selected_issue_types.append("Heating, ventilation and air conditioning (HAVC) issues")
+            if cleaning_needs:
+                selected_issue_types.append("Cleaning needs due to heavy soiling")
+            if network_internet_problems:
+                selected_issue_types.append("Network/internet problems")
+            if it_equipment:
+                selected_issue_types.append("Issues with/lack of IT equipment")
             issue_types = ', '.join(selected_issue_types)
 
             # Implement 'Europe/Zurich' as the standard time zone for the application
