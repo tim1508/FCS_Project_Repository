@@ -92,7 +92,7 @@ def submission_form():
     # When "Submit" button is clicked
     if st.button("Submit"):
         # Checking that at least one issue type is selected
-        issue_type_selected = it_problem or missing_material or non_functioning_facilities
+        #issue_type_selected = it_problem or missing_material or non_functioning_facilities
 
         # Checking if all required fields are filled out
         all_fields_filled = all([name, hsg_email, room_number, issue_type_selected, user_comment])
