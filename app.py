@@ -5,6 +5,9 @@ import sqlite3
 import re
 from datetime import datetime
 import pytz
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+import smtplib  # Added import for sending emails
 
 # Create a SQLite database connection
 conn = sqlite3.connect('hsg_reporting.db')
@@ -24,7 +27,8 @@ c.execute('''
         importance TEXT,
         submission_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         status TEXT DEFAULT 'Pending',
-        user_comment TEXT 
+        user_comment TEXT,
+        uploaded_file FILE
     )
 ''')
 conn.commit()
@@ -44,6 +48,25 @@ def is_valid_email(hsg_email):
         return bool(match)
     else:
         return True
+
+def send_email(to_email, subject, message):
+    # Email server configuration
+    smtp_server = 'smtp.gmail.com'
+    smtp_port = 587
+    smtp_username = 'hsgreportingtool@gmail.com'
+    smtp_password = 'bjtp jmtf omrc tala'
+
+    # Create the email message
+    email_message = f"Subject: {subject}\n\n{message}"
+
+    # Connect to the SMTP server
+    with smtplib.SMTP(smtp_server, smtp_port) as server:
+        # Log in to the SMTP server
+        server.starttls()
+        server.login(smtp_username, smtp_password)
+
+        # Send the email
+        server.sendmail(smtp_username, to_email, email_message)
         
 def submission_form():
     st.header("Submission Form")
@@ -113,14 +136,17 @@ def submission_form():
 
             # Import data to the database
             c.execute('''
-                INSERT INTO submissions (name, hsg_email, issue_type, room_number, importance, submission_time, user_comment)
+                INSERT INTO submissions (name, hsg_email, issue_type, room_number, importance, submission_time, user_comment, uploaded_file)
                 VALUES (?, ?, ?, ?, ?, ?, ?)
-            ''', (name, hsg_email, issue_types, room_number, importance, submission_time, user_comment))
+            ''', (name, hsg_email, issue_types, room_number, importance, submission_time, user_comment, uploaded_file))
             conn.commit()
             st.success("Submission Successful!")
         else:
             # Error if not all fields are filled out
-            st.error("Please fill in all required fields and select at least one issue type.")
+            st.error("Please fill in all required fields and select one issue type.")
+
+         # Send email to the submitter
+        send_email(hsg_email, "Your Issue Submission", f"Thank you for submitting your issue. We will review it shortly.")
 
 
 def submitted_issues():
@@ -137,7 +163,6 @@ def submitted_issues():
     
     # Sort the issues by issue type and importance
     submitted_data = submitted_data.sort_values(by=['issue_type', 'importance'], ascending=[True, False])
-    # Rename the columns
 
     # Change column names
     submitted_data = submitted_data.rename(columns={
@@ -147,7 +172,8 @@ def submitted_issues():
         'importance': 'IMPORTANCE',
         'submission_time': 'SUBMITTED AT',
         'status': 'STATUS',
-        'user_comment': 'PROBLEM DESCRIPTION'
+        'user_comment': 'PROBLEM DESCRIPTION',
+        'uploaded_file': 'PHOTO'
     })
 
     # Set the index to the issue type
@@ -159,6 +185,55 @@ def submitted_issues():
     # Display the list of submitted issues
     st.subheader("List of Submitted Issues:")
     st.table(submitted_data)
+
+    # Create a bar chart for the number of issues per issue type
+    st.subheader("Number of Issues by Issue Type")
+    issue_type_counts = submitted_data.index.value_counts()
+    fig, ax = plt.subplots()
+    issue_type_counts.plot(kind='bar', ax=ax)
+    ax.set_xlabel("Issue Type")
+    ax.set_ylabel("Number of Issues")
+    st.pyplot(fig)
+
+
+    # Create a time series plot for the number of issues submitted per day
+    st.subheader("Issues Submitted per Day")
+    submitted_data['SUBMITTED AT'] = pd.to_datetime(submitted_data['SUBMITTED AT'])
+    submitted_data['Date'] = submitted_data['SUBMITTED AT'].dt.date
+    issues_per_day = submitted_data.groupby('Date').size()
+
+    fig, ax = plt.subplots()
+    ax.bar(issues_per_day.index, issues_per_day.values, width=0.1, align='center')
+    ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
+    
+    # Rotate the date labels for better readability
+    plt.xticks(rotation=45, ha='right')
+
+    ax.set_xlabel("Date")
+    ax.set_ylabel("Number of Issues Submitted")
+    ax.set_title("Issues Submitted per Day")
+    st.pyplot(fig)
+
+    # Create a bar chart for the number of issues per importance level
+    st.subheader("Number of Issues by Importance Level")
+    importance_counts = submitted_data['IMPORTANCE'].value_counts()
+
+    fig, ax = plt.subplots()
+    importance_counts.plot(kind='bar', ax=ax)
+    ax.set_xlabel("Importance Level")
+    ax.set_ylabel("Number of Issues")
+    ax.set_title("Number of Issues by Importance Level")
+    st.pyplot(fig)
+
+    # Create a pie chart for the distribution of statuses
+    st.subheader("Distribution of Statuses")
+    status_counts = submitted_data['STATUS'].value_counts()
+
+    fig, ax = plt.subplots()
+    ax.pie(status_counts, labels=status_counts.index, autopct='%1.1f%%', startangle=90)
+    ax.axis('equal')  # Equal aspect ratio ensures the pie chart is circular.
+    ax.set_title("Distribution of Statuses")
+    st.pyplot(fig)
 
 # Set a password for accessing the "Overwrite Status" page
 correct_password = "Group62"
@@ -210,6 +285,24 @@ def overwrite_status():
         ''', (new_status, submission_time, selected_issue_id))
         conn.commit()
         st.success("Status Updated Successfully!")
+
+        # Display the status update confirmation
+        confirmation = st.checkbox("I confirm that I want to update the status and send an email.")
+        if confirmation:
+            print("Hier bin ich da")
+
+            # Send email to the submitter if the new status is "Resolved"
+            if new_status == 'Resolved':
+                submitter_email = selected_issue['hsg_email']
+                print("Hier bin ich da")
+                print(selected_issue['hsg_email'])
+
+
+                # Ask for confirmation before sending the email
+                send_confirmation = st.checkbox("Do you want to send an email to the submitter?")
+                if send_confirmation:
+                    send_email(submitter_email, "Issue Resolved", f"Dear {selected_issue['name']},\n\nThank you for using this tool. We want to inform you that the issue you have reported is now fixed!")
+                    st.success("Email Sent Successfully!")
 
 def main():
     st.title("HSG Reporting Tool")
