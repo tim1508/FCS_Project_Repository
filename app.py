@@ -30,7 +30,7 @@ c.execute('''
 conn.commit()
 
 # HSG Logo on top of the page with spaces afterward
-image_path = "hsg-logo-new.png"
+image_path = "hsg-logo.png"
 st.image(image_path, use_column_width=True)
 st.write("")
 st.write("")
