@@ -87,7 +87,7 @@ def submission_form():
     cleaning_needs = st.checkbox("Cleaning needs due to heavy soiling")
     network_internet_problems = st.checkbox("Network/internet problems")
     it_equipment = st.checkbox("Issues with/lack of IT equipment")
-
+    
     # Importance dropdown menu
     importance = st.selectbox("Importance:", ['Low', 'Medium', 'High'])
     
