@@ -144,7 +144,8 @@ def submitted_issues():
         'room_number': 'ROOM NR.',
         'importance': 'IMPORTANCE',
         'submission_time': 'SUBMITTED AT',
-        'status': 'STATUS'
+        'status': 'STATUS',
+        'user_comment': 'PROBLEM DESCRIPTION'
     })
 
     # Set the index to the issue type
