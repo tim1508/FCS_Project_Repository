@@ -113,7 +113,7 @@ def submission_form():
             # Import data to the database
             c.execute('''
                 INSERT INTO submissions (name, hsg_email, issue_type, room_number, importance, submission_time, user_comment)
-                VALUES (?, ?, ?, ?, ?, ?)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
             ''', (name, hsg_email, issue_types, room_number, importance, submission_time, user_comment))
             conn.commit()
             st.success("Submission Successful!")
