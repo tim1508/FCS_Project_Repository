@@ -81,7 +81,7 @@ def submission_form():
     non_functioning_facilities = st.checkbox("Non-functioning Facilities")
     
     st.subheader("Issue Type 2:")
-    st.radios("Select Issue Type:"["IT Problem", "Missing Material", "Non-functioning Facilities"])
+    issue_types = st.radios("Select Issue Type:"["IT Problem", "Missing Material", "Non-functioning Facilities"])
 
     # Importance dropdown menu
     importance = st.selectbox("Importance:", ['Low', 'Medium', 'High'])
