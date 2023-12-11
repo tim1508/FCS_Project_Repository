@@ -23,7 +23,8 @@ c.execute('''
         room_number TEXT,
         importance TEXT,
         submission_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        status TEXT DEFAULT 'Pending'
+        status TEXT DEFAULT 'Pending',
+        user_comment TEXT 
     )
 ''')
 conn.commit()
@@ -111,9 +112,9 @@ def submission_form():
 
             # Import data to the database
             c.execute('''
-                INSERT INTO submissions (name, hsg_email, issue_type, room_number, importance, submission_time)
+                INSERT INTO submissions (name, hsg_email, issue_type, room_number, importance, submission_time, user_comment)
                 VALUES (?, ?, ?, ?, ?, ?)
-            ''', (name, hsg_email, issue_types, room_number, importance, submission_time))
+            ''', (name, hsg_email, issue_types, room_number, importance, submission_time, user_comment))
             conn.commit()
             st.success("Submission Successful!")
         else:
