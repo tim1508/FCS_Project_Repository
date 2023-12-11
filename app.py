@@ -66,7 +66,7 @@ def submission_form():
 
     # Display the uploaded folder
     if uploaded_file is not None:
-        st.image(uploaded_file, caption="Uploaded Photo", use_column_with=True)
+        st.image(uploaded_file, caption="Uploaded Photo", use_column_width=True)
 
     # Room number input
     room_number = st.text_input("Room Number:")
