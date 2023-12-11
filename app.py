@@ -252,7 +252,7 @@ def submitted_issues():
     ax.add_artist(centre_circle)
 
     # Add a legend for better readability
-    ax.legend(status_counts.index, loc='lower right')
+    ax.legend(status_counts.index, loc='upper right')
 
     st.pyplot(fig)
 
@@ -266,7 +266,7 @@ def overwrite_status():
     entered_password = st.sidebar.text_input("Enter Password", "", type="password")
 
     if entered_password != correct_password:
-        st.warning("Incorrect password. Please enter the correct password to access this page.")
+        st.warning("You haven't entered a password / the password is incorrect. Please enter the correct password to access this page.")
         return
 
     # Continue with the rest of the function if the correct password is entered
