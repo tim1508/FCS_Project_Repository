@@ -6,8 +6,7 @@ from datetime import datetime
 import pytz
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
-import smtplib  
-# Added import for sending emails
+import smtplib  # Added import for sending emails
 import streamlit as st
 
 
@@ -49,7 +48,7 @@ def is_valid_email(hsg_email):
         return bool(match)
     else:
         return True
-
+    
 # Check whether the specified room number is a real HSG room number
 def is_valid_room_number(room_number):
     if room_number:
@@ -58,6 +57,13 @@ def is_valid_room_number(room_number):
         return bool(match)
     else:
         return True
+    
+# Global variables for email configuration
+smtp_server = 'smtp.gmail.com'
+smtp_port = 587
+smtp_username = 'hsgreportingtool@gmail.com'
+smtp_password = 'bjtp jmtf omrc tala'
+from_email = 'hsgreportingtool@gmail.com'
         
 def submission_form():
     st.header("Submission Form")
@@ -142,11 +148,29 @@ def submission_form():
                 VALUES (?, ?, ?, ?, ?, ?, ?)
             ''', (name, hsg_email, issue_types, room_number, importance, submission_time, user_comment))
             conn.commit()
+
+            # Send confirmation email to the submitter
+            send_confirmation_email(hsg_email, name)
+        
             st.success("Submission Successful!")
         else:
             # Error if not all fields are filled out
             st.error("Please fill in all required fields and select at least one issue type.")
 
+#Function to send confirmation email
+def send_confirmation_email(recipient_email, recipient_name):
+    subject = 'Issue received!'
+    body = f'Hello {recipient_name},\n\nWe have successfully received your issue. We will give our best to resolve it in the fastest possible time. You will hear from us when we have fixed your issue.'
+    message = f'Subject: {subject}\n\n{body}'
+
+    try:
+        with smtplib.SMTP(smtp_server, smtp_port) as smtp:
+            smtp.starttls()
+            smtp.login(smtp_username, smtp_password)
+            smtp.sendmail(from_email, recipient_email, message)
+        st.success("Confirmation Email Sent Successfully!")
+    except Exception as e:
+        st.error(f"An error occurred while sending the confirmation email: {str(e)}")
 
 def submitted_issues():
     st.header("Submitted Issues")
@@ -273,6 +297,8 @@ def submitted_issues():
 correct_password = "Group62"
 
 def overwrite_status():
+    global smtp_server, smtp_port, smtp_username, smtp_password, from_email
+
     st.header("Overwrite Status")
 
     # Password protection for the "Overwrite Status" page
@@ -299,6 +325,10 @@ def overwrite_status():
     st.subheader("Selected Issue Details:")
     st.write(selected_issue)
 
+    # Display the Name and Email fields filled with values from the selected issue
+    name_input = st.text_input("Name:", value=selected_issue['name'], key='name')
+    hsg_email_input = st.text_input("HSG Email Address:", value=selected_issue['hsg_email'], key='hsg_email')
+
     # Display the status update form
     new_status_options = ['Pending', 'In Progress', 'Resolved']
     new_status = st.selectbox("Select New Status:", new_status_options)
@@ -310,6 +340,26 @@ def overwrite_status():
 
         # Implement datetime.now() with the selected time zone (Zurich)
         submission_time = datetime.now(desired_time_zone).strftime("%Y-%m-%d %H:%M:%S")
+
+        # Ask for confirmation before updating status to "Resolved"
+        if new_status == 'Resolved':
+            
+            # Use the HSG email input box value for the recipient
+            submitter_email = hsg_email_input
+
+            # Compose and send the email
+            subject = 'Issue Resolved!'
+            body = f'Hello {name_input},\n\nThank you for using our HSG Reporting Tool. We want to inform you that the issue you have reported is now fixed!'
+            message = f'Subject: {subject}\n\n{body}'
+
+            try:
+                with smtplib.SMTP(smtp_server, smtp_port) as smtp:
+                    smtp.starttls()
+                    smtp.login(smtp_username, smtp_password)
+                    smtp.sendmail(from_email, submitter_email, message)
+                st.success("Email Sent Successfully!")
+            except Exception as e:
+                st.error(f"An error occurred while sending the email: {str(e)}")
 
         # Update the status and timestamp in the database
         c.execute('''
