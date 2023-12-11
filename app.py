@@ -239,10 +239,21 @@ def submitted_issues():
     st.subheader("Distribution of Statuses")
     status_counts = submitted_data['STATUS'].value_counts()
 
+    # Set the colors to dark green and a few shades
+    colors = ['darkgreen', 'forestgreen', 'limegreen', 'mediumseagreen']
+
     fig, ax = plt.subplots()
-    ax.pie(status_counts, labels=status_counts.index, autopct='%1.1f%%', startangle=90)
+    ax.pie(status_counts, labels=status_counts.index, autopct='%1.1f%%', startangle=90, colors=colors, wedgeprops=dict(width=0.3))
     ax.axis('equal')  # Equal aspect ratio ensures the pie chart is circular.
     ax.set_title("Distribution of Statuses")
+
+    # Add a circle in the middle for a donut chart look
+    centre_circle = plt.Circle((0,0),0.70,fc='white')
+    ax.add_artist(centre_circle)
+
+    # Add a legend for better readability
+    ax.legend(status_counts.index, loc='upper right')
+
     st.pyplot(fig)
 
 # Set a password for accessing the "Overwrite Status" page
