@@ -30,7 +30,7 @@ c.execute('''
 conn.commit()
 
 # HSG Logo on top of the page with spaces afterward
-image_path = "HSG-logo-new.png"
+image_path = "hsg-logo.png"
 st.image(image_path, use_column_width=True)
 st.write("")
 st.write("")
@@ -79,13 +79,12 @@ def submission_form():
     it_problem = st.checkbox("IT Problem")
     missing_material = st.checkbox("Missing Material")
     non_functioning_facilities = st.checkbox("Non-functioning Facilities")
-    
-    
+
     # Importance dropdown menu
     importance = st.selectbox("Importance:", ['Low', 'Medium', 'High'])
     
     # Comment box
-    user_comment = st.text_area("Problem Description:", max_chars=250)
+    user_comment = st.text_area("Problem Description:", max_chars=500)
 
     # When "Submit" button is clicked
     if st.button("Submit"):
