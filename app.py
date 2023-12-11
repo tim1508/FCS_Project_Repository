@@ -214,7 +214,7 @@ def submitted_issues():
     ax.set_title("Issues Submitted per Day")
 
     # Add grid lines for better visualization
-    ax.grid(axis='y', linestyle='--', alpha=0.7)
+    ax.grid(axis='y', linestyle='--', alpha=1)
 
     # Add a background color for better contrast
     ax.set_facecolor('#f0f0f0')  # Light gray background color
@@ -229,7 +229,7 @@ def submitted_issues():
     color = 'darkgreen'
 
     fig, ax = plt.subplots()
-    importance_counts.plot(kind='bar', ax=ax, color=color, alpha=0.7)
+    importance_counts.plot(kind='bar', ax=ax, color=color, alpha=1)
     ax.set_xlabel("Importance Level")
     ax.set_ylabel("Number of Issues")
     ax.set_title("Number of Issues by Importance Level")
