@@ -225,8 +225,11 @@ def submitted_issues():
     st.subheader("Number of Issues by Importance Level")
     importance_counts = submitted_data['IMPORTANCE'].value_counts()
 
+    # Set the color to dark green
+    color = 'darkgreen'
+
     fig, ax = plt.subplots()
-    importance_counts.plot(kind='bar', ax=ax)
+    importance_counts.plot(kind='bar', ax=ax, color=color, alpha=0.7)
     ax.set_xlabel("Importance Level")
     ax.set_ylabel("Number of Issues")
     ax.set_title("Number of Issues by Importance Level")
