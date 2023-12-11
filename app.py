@@ -172,14 +172,20 @@ def submitted_issues():
     st.subheader("List of Submitted Issues:")
     st.table(submitted_data)
 
-    # Create a bar chart for the number of issues per issue type
-    st.subheader("Number of Issues by Issue Type")
-    issue_type_counts = submitted_data.index.value_counts()
-    fig, ax = plt.subplots()
-    issue_type_counts.plot(kind='bar', ax=ax)
-    ax.set_xlabel("Issue Type")
-    ax.set_ylabel("Number of Issues")
-    st.pyplot(fig)
+   # Create a bar chart for the number of issues per issue type
+st.subheader("Number of Issues by Issue Type")
+issue_type_counts = submitted_data.index.value_counts()
+
+# Set the color to dark green
+color = 'darkgreen'
+
+fig, ax = plt.subplots()
+shortened_labels = [label[:20] for label in issue_type_counts.index]
+issue_type_counts.plot(kind='bar', ax=ax, color=color)
+ax.set_xticklabels(shortened_labels, rotation=45, ha='right')  # Rotate and align x-axis labels
+ax.set_xlabel("Issue Type")
+ax.set_ylabel("Number of Issues")
+st.pyplot(fig)
 
 
     # Create a time series plot for the number of issues submitted per day
