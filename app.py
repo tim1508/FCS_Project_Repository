@@ -59,7 +59,7 @@ def submission_form():
         st.error("Invalid mail address. Please check that you have entered your HSG mail address correctly.")
 
     # File uploader for photos
-    uploaded_file = st.file_uploader("Upload a photo", type=["jpg", "jpeg", "png"])
+    uploaded_file = st.file_uploader("Upload a photo:", type=["jpg", "jpeg", "png"])
 
     # Display the uploaded folder
     if uploaded_file is not None:
