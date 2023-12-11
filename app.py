@@ -5,7 +5,6 @@ import sqlite3
 import re
 from datetime import datetime
 import pytz
-
 import matplotlib.dates as mdates
 import smtplib  # Added import for sending emails
 
