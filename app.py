@@ -252,7 +252,7 @@ def submitted_issues():
     ax.add_artist(centre_circle)
 
     # Add a legend for better readability
-    ax.legend(status_counts.index, loc='upper right')
+    ax.legend(status_counts.index, loc='lower right')
 
     st.pyplot(fig)
 
