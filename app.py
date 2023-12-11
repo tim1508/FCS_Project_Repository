@@ -198,7 +198,7 @@ def submitted_issues():
     color = 'darkgreen'
 
     fig, ax = plt.subplots()
-    ax.bar(issues_per_day.index, issues_per_day.values, width=0.7, align='center', color=color, alpha=0.7)  # Adjusted width and added alpha for transparency
+    ax.bar(issues_per_day.index, issues_per_day.values, width=0.7, align='center', color=color, alpha=1)  # Adjusted width and added alpha for transparency
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
 
     # Adjust spacing between bars
