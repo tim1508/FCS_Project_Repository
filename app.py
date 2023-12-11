@@ -5,7 +5,9 @@ import sqlite3
 import re
 from datetime import datetime
 import pytz
-
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+import smtplib  # Added import for sending emails
 
 
 # Create a SQLite database connection
@@ -160,6 +162,55 @@ def submitted_issues():
     # Display the list of submitted issues
     st.subheader("List of Submitted Issues:")
     st.table(submitted_data)
+
+    # Create a bar chart for the number of issues per issue type
+    st.subheader("Number of Issues by Issue Type")
+    issue_type_counts = submitted_data.index.value_counts()
+    fig, ax = plt.subplots()
+    issue_type_counts.plot(kind='bar', ax=ax)
+    ax.set_xlabel("Issue Type")
+    ax.set_ylabel("Number of Issues")
+    st.pyplot(fig)
+
+
+    # Create a time series plot for the number of issues submitted per day
+    st.subheader("Issues Submitted per Day")
+    submitted_data['SUBMITTED AT'] = pd.to_datetime(submitted_data['SUBMITTED AT'])
+    submitted_data['Date'] = submitted_data['SUBMITTED AT'].dt.date
+    issues_per_day = submitted_data.groupby('Date').size()
+
+    fig, ax = plt.subplots()
+    ax.bar(issues_per_day.index, issues_per_day.values, width=0.1, align='center')
+    ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
+    
+    # Rotate the date labels for better readability
+    plt.xticks(rotation=45, ha='right')
+
+    ax.set_xlabel("Date")
+    ax.set_ylabel("Number of Issues Submitted")
+    ax.set_title("Issues Submitted per Day")
+    st.pyplot(fig)
+
+    # Create a bar chart for the number of issues per importance level
+    st.subheader("Number of Issues by Importance Level")
+    importance_counts = submitted_data['IMPORTANCE'].value_counts()
+
+    fig, ax = plt.subplots()
+    importance_counts.plot(kind='bar', ax=ax)
+    ax.set_xlabel("Importance Level")
+    ax.set_ylabel("Number of Issues")
+    ax.set_title("Number of Issues by Importance Level")
+    st.pyplot(fig)
+
+    # Create a pie chart for the distribution of statuses
+    st.subheader("Distribution of Statuses")
+    status_counts = submitted_data['STATUS'].value_counts()
+
+    fig, ax = plt.subplots()
+    ax.pie(status_counts, labels=status_counts.index, autopct='%1.1f%%', startangle=90)
+    ax.axis('equal')  # Equal aspect ratio ensures the pie chart is circular.
+    ax.set_title("Distribution of Statuses")
+    st.pyplot(fig)
 
 # Set a password for accessing the "Overwrite Status" page
 correct_password = "Group62"
