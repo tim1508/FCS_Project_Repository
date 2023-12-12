@@ -157,10 +157,18 @@ def submission_form():
             # Error if not all fields are filled out
             st.error("Please fill in all required fields and select at least one issue type.")
 
-#Function to send confirmation email
+# Function to send confirmation email
 def send_confirmation_email(recipient_email, recipient_name):
     subject = 'Issue received!'
-    body = f'Dear {recipient_name},\n\nWe have successfully received your issue. We will give our best to resolve it in the fastest possible time. You will hear from us when we have fixed your issue.'
+    body = f'''Dear {recipient_name},
+
+Thank you for reaching out to us with your concerns. We would like to confirm that we have received your issue report and are giving it our utmost attention. Our team is already in the process of reviewing the details you provided, and we are committed to resolving it as swiftly and efficiently as possible.
+
+We will keep you updated on our progress and notify you as soon as your issue has been resolved. Should you have any further questions or require additional assistance in the meantime, please feel free to contact us. Your patience and understanding in this matter are greatly appreciated.
+
+Best regards,
+Your HSG Service Team'''
+    
     message = f'Subject: {subject}\n\n{body}'
 
     try:
@@ -170,7 +178,7 @@ def send_confirmation_email(recipient_email, recipient_name):
             smtp.sendmail(from_email, recipient_email, message)
         st.success("Confirmation Email Sent Successfully!")
     except Exception as e:
-        st.error(f"An error occurred while sending the confirmation email: {str(e)}")
+        st.error(f"An error occurred while sending the confirmation email: {str(e)}")
 
 def submitted_issues():
     st.header("Submitted Issues")
