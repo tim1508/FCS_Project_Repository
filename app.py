@@ -357,7 +357,16 @@ def overwrite_status():
 
             # Compose and send the email
             subject = 'Issue Resolved!'
-            body = f'Hello {name_input},\n\nThank you for using our HSG Reporting Tool. We want to inform you that the issue you have reported is now fixed!'
+            body = f'Hello {name_input},
+Great news!
+The issue you brought to our attention via the HSG Reporting Tool has been effectively resolved. We sincerely appreciate your patience and understanding throughout this process.
+Should you have any further questions, need additional assistance, or encounter any other issues, please do not hesitate to reach out to us.
+
+Thank you for using our HSG Reporting Tool. We are committed to continually providing you with exceptional service.
+
+Best regards,
+Your HSG Service Team'
+            
             message = f'Subject: {subject}\n\n{body}'
 
             try:
