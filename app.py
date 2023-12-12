@@ -237,8 +237,8 @@ def submitted_issues():
     ax.set_ylabel("Number of Issues")
     st.pyplot(fig)
 
-st.write("")
-st.write("")
+    st.write("")
+    st.write("")
 
     # Create a time series plot for the number of issues submitted per day
     st.subheader("Issues Submitted per Day")
@@ -273,8 +273,8 @@ st.write("")
 
     st.pyplot(fig)
 
-st.write("")
-st.write("")
+    st.write("")
+    st.write("")
 
     # Create a bar chart for the number of issues per importance level
     st.subheader("Count of Issues classified according to their Level of Importance")
@@ -290,8 +290,8 @@ st.write("")
     ax.set_title("Number of Issues by Importance Level")
     st.pyplot(fig)
 
-st.write("")
-st.write("")
+    st.write("")
+    st.write("")
 
     # Create a pie chart for the distribution of statuses
     st.subheader("Distribution of Statuses")
