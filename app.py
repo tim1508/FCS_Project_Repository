@@ -69,7 +69,8 @@ smtp_port = 587
 smtp_username = 'hsgreportingtool@gmail.com'
 smtp_password = 'bjtp jmtf omrc tala'
 from_email = 'hsgreportingtool@gmail.com'
-        
+
+#Set up our first page "Submission Form"
 def submission_form():
     st.header("Submission Form")
 
@@ -95,7 +96,8 @@ def submission_form():
     if not is_valid_room_number(room_number):
         st.error("Invalid room number format. Please enter a room number in the format 'A 09-001'.") 
 
-    # Maze Map with a fixed focus on the University of St. Gallen
+    # Maze Map with a fixed focus on the University of St. Gallen (Campus_ID = 710)
+    # We implemented Maze Map as an iframe
     maze_map_url = "https://use.mazemap.com/embed.html?v=1&zlevel=1&center=9.373611,47.429708&zoom=14.7&campusid=710"
     st.markdown(f"""
         <iframe src="{maze_map_url}"
@@ -185,6 +187,7 @@ Your HSG Service Team'''
     except Exception as e:
         st.error(f"An error occurred while sending the confirmation email: {str(e)}")
 
+#Set up our second page "Submitted Issues"
 def submitted_issues():
     st.header("Submitted Issues")
 
@@ -199,7 +202,7 @@ def submitted_issues():
     
     # Sort the issues by issue type and importance
     submitted_data = submitted_data.sort_values(by=['issue_type', 'importance'], ascending=[True, False])
-    # Rename the columns
+    
 
     # Change column names
     submitted_data = submitted_data.rename(columns={
@@ -237,6 +240,7 @@ def submitted_issues():
     ax.set_ylabel("Number of Issues")
     st.pyplot(fig)
 
+    # Added spaces
     st.write("")
     st.write("")
 
@@ -273,6 +277,7 @@ def submitted_issues():
 
     st.pyplot(fig)
 
+    # Added spaces
     st.write("")
     st.write("")
 
@@ -290,6 +295,7 @@ def submitted_issues():
     ax.set_title("Number of Issues by Importance Level")
     st.pyplot(fig)
 
+    # Added spaces
     st.write("")
     st.write("")
 
@@ -317,6 +323,7 @@ def submitted_issues():
 # Set a password for accessing the "Overwrite Status" page
 correct_password = "Group62"
 
+# Set up our third page "Overwrite Status"
 def overwrite_status():
     global smtp_server, smtp_port, smtp_username, smtp_password, from_email
 
