@@ -49,7 +49,7 @@ def is_valid_email(hsg_email):
     else:
         return True
     
-# Check whether the specified room number is a real HSG room number
+# Check whether the specified room number has the correct format of HSG
 def is_valid_room_number(room_number):
     if room_number:
         room_number_pattern = r'^[A-Z] \d{2}-\d{3}$'
@@ -90,7 +90,7 @@ def submission_form():
     if not is_valid_room_number(room_number):
         st.error("Invalid room number format. Please enter a room number in the format 'A 09-001'.") 
 
-    # Maze Map with a focus on the University of St. Gallen
+    # Maze Map with a fixed focus on the University of St. Gallen
     maze_map_url = "https://use.mazemap.com/embed.html?v=1&zlevel=1&center=9.373611,47.429708&zoom=14.7&campusid=710"
     st.markdown(f"""
         <iframe src="{maze_map_url}"
