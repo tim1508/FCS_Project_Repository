@@ -406,7 +406,9 @@ Your HSG Service Team'''
         ''', (new_status, submission_time, selected_issue_id))
         conn.commit()
         st.success("Status Updated Successfully!")
-
+        
+# Defining the main() function at the end allows for a more organized structure where all the functions and code specific to the script's functionality are defined first, and the main execution logic is separated at the end. It also makes it easier to read and understand the flow of the script.
+# This pattern is used to enhance code readability, maintainability, and to ensure that the code inside the main() function is executed only when the script is run directly and not when it's imported as a module elsewhere.
 def main():
     st.title("HSG Reporting Tool")
 
