@@ -299,7 +299,7 @@ correct_password = "Group62"
 def overwrite_status():
     global smtp_server, smtp_port, smtp_username, smtp_password, from_email
 
-    st.header("Overwrite Status (unversity staff only)")
+    st.header("Overwrite Status")
 
     # Password protection for the "Overwrite Status" page
     entered_password = st.sidebar.text_input("Enter Password", "", type="password")
