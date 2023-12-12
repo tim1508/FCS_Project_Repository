@@ -160,12 +160,7 @@ def submission_form():
 #Function to send confirmation email
 def send_confirmation_email(recipient_email, recipient_name):
     subject = 'Issue received!'
-    body = f'Dear {recipient_name},\n\nThank you for reaching out to us with your concerns.
-    We would like to confirm that we have received your issue report and are giving it our utmost attention. Our team is already in the process of reviewing the details you provided, and we are committed to resolving it as swiftly and efficiently as possible.
-    We will keep you updated on our progress and notify you as soon as your issue has been resolved. Should you have any further questions or require additional assistance in the meantime, please feel free to contact us. Your patience and understanding in this matter are greatly appreciated.
-
-    Best regards,
-    Your HSG Service Team'
+    body = f'Dear {recipient_name},\n\nWe have successfully received your issue. We will give our best to resolve it in the fastest possible time. You will hear from us when we have fixed your issue.'
     message = f'Subject: {subject}\n\n{body}'
 
     try:
