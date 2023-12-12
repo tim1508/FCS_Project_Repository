@@ -1,13 +1,18 @@
 # Group 6.2
-import pandas as pd
-import sqlite3
-import re
-from datetime import datetime
-import pytz
-import matplotlib.pyplot as plt
-import matplotlib.dates as mdates
-import smtplib  # Added import for sending emails
-import streamlit as st
+
+#This is our Streamlit application for the HSG Reporting Tool. We worked the last six weeks on this code for our Computer Science Group Project.
+#Our tool solves the problem of facility issues at the HSG Campus. You can just submit your issue through our Streamlit application and it gets stored in a database.
+#It is even possible for the facility management team to overwrite the status of the submitted issues. Therefore this application has a real use case! 
+
+import pandas as pd # Added for tables
+import sqlite3 # Added for database
+import re # Added for validation
+from datetime import datetime # Added for the timestamps
+import pytz # Added for right time zone
+import matplotlib.pyplot as plt # Added for charts
+import matplotlib.dates as mdates # Added for charts
+import smtplib  # Added for sending emails
+import streamlit as st # Added for Streamlit
 
 
 # Create a SQLite database connection
@@ -33,7 +38,7 @@ c.execute('''
 ''')
 conn.commit()
 
-# HSG Logo on top of the page with spaces afterward
+# HSG Logo on top of the page with spaces afterwards
 image_path = "HSG-logo-new.png"
 st.image(image_path, use_column_width=True)
 st.write("")
@@ -232,6 +237,8 @@ def submitted_issues():
     ax.set_ylabel("Number of Issues")
     st.pyplot(fig)
 
+st.write("")
+st.write("")
 
     # Create a time series plot for the number of issues submitted per day
     st.subheader("Issues Submitted per Day")
@@ -266,6 +273,9 @@ def submitted_issues():
 
     st.pyplot(fig)
 
+st.write("")
+st.write("")
+
     # Create a bar chart for the number of issues per importance level
     st.subheader("Count of Issues classified according to their Level of Importance")
     importance_counts = submitted_data['IMPORTANCE'].value_counts()
@@ -279,6 +289,9 @@ def submitted_issues():
     ax.set_ylabel("Number of Issues")
     ax.set_title("Number of Issues by Importance Level")
     st.pyplot(fig)
+
+st.write("")
+st.write("")
 
     # Create a pie chart for the distribution of statuses
     st.subheader("Distribution of Statuses")
