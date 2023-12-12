@@ -210,7 +210,7 @@ def submitted_issues():
     st.table(submitted_data)
 
    # Create a bar chart for the number of issues per issue type
-    st.subheader("Number of Issues by Issue Type")
+    st.subheader("Number of Issues categorized by Issue Type")
     issue_type_counts = submitted_data.index.value_counts()
 
     # Set the color to dark green
@@ -259,7 +259,7 @@ def submitted_issues():
     st.pyplot(fig)
 
     # Create a bar chart for the number of issues per importance level
-    st.subheader("Number of Issues by Importance Level")
+    st.subheader("Count of Issues classified according to their Level of Importance")
     importance_counts = submitted_data['IMPORTANCE'].value_counts()
 
     # Set the color to dark green
