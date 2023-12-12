@@ -285,7 +285,7 @@ def submitted_issues():
     ax.set_title("Distribution of Statuses")
 
     # Add a circle in the middle for a donut chart look
-    centre_circle = plt.Circle((0,0),0.30,fc='white')
+    centre_circle = plt.Circle((0,0),0.50,fc='white')
     ax.add_artist(centre_circle)
 
     # Add a legend for better readability
