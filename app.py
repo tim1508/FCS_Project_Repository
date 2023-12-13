@@ -1,8 +1,12 @@
 # Group 6.2
 
-#This is our Streamlit application for the HSG Reporting Tool. We worked the last six weeks on this code for our Computer Science Group Project.
-#Our tool solves the problem of facility issues at the HSG Campus. You can just submit your issue through our Streamlit application and it gets stored in a database.
-#It is even possible for the facility management team to overwrite the status of the submitted issues. Therefore this application has a real use case! 
+# This is our Streamlit application for the HSG Reporting Tool. We worked the last six weeks on this code for our Computer Science Group Project.
+# Our tool solves the problem of facility issues at the HSG Campus. You can just submit your issue through our Streamlit application and it gets stored in a database.
+# It is even possible for the facility management team to overwrite the status of the submitted issues. Therefore this application has a real use case!
+
+# Our app is accessable via https://groupsixpointtwo.streamlit.app/
+
+# Please make sure to submit an issue on the first page so a database can be created on your laptop otherwise the second page will raise an error for the charts
 
 import pandas as pd # Added for tables
 import sqlite3 # Added for database
@@ -70,7 +74,7 @@ smtp_username = 'hsgreportingtool@gmail.com'
 smtp_password = 'bjtp jmtf omrc tala'
 from_email = 'hsgreportingtool@gmail.com'
 
-#Set up our first page "Submission Form"
+# Set up our first page "Submission Form"
 def submission_form():
     st.header("Submission Form")
 
@@ -187,7 +191,7 @@ Your HSG Service Team'''
     except Exception as e:
         st.error(f"An error occurred while sending the confirmation email: {str(e)}")
 
-#Set up our second page "Submitted Issues"
+# Set up our second page "Submitted Issues"
 def submitted_issues():
     st.header("Submitted Issues")
 
