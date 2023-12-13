@@ -4,7 +4,7 @@
 # Our tool solves the problem of facility issues at the HSG Campus. You can just submit your issue through our Streamlit application and it gets stored in a database.
 # It is even possible for the facility management team to overwrite the status of the submitted issues. Therefore this application has a real use case!
 
-# Our app is accessable via https://groupsixpointtwo.streamlit.app/
+# Our app is accessible via https://groupsixpointtwo.streamlit.app/
 
 # Please make sure to submit an issue on the first page so a database can be created on your laptop otherwise the second page will raise an error for the charts
 
