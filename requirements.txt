@@ -2,3 +2,13 @@ streamlit
 pandas
 captcha==0.5.0
 matplotlib==3.7.1
+
+import pandas as pd # Added for tables
+import sqlite3 # Added for database
+import re # Added for validation
+from datetime import datetime # Added for the timestamps
+import pytz # Added for right time zone
+import matplotlib.pyplot as plt # Added for charts
+import matplotlib.dates as mdates # Added for charts
+import smtplib  # Added for sending emails
+import streamlit as st # Added for Streamlit
