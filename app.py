@@ -83,7 +83,7 @@ def submission_form():
         st.error("Invalid mail address. Please check that you have entered your HSG mail address correctly.")
 
     # File uploader for photos
-    uploaded_file = st.file_uploader("Upload a photo:", type=["jpg", "jpeg", "png"])
+    uploaded_file = st.file_uploader("Upload a Photo:", type=["jpg", "jpeg", "png"])
 
     # Display the uploaded folder
     if uploaded_file is not None:
@@ -321,7 +321,7 @@ def submitted_issues():
     st.pyplot(fig)
 
 # Set a password for accessing the "Overwrite Status" page
-correct_password = "Group62"
+correct_password = "Group6.2"
 
 # Set up our third page "Overwrite Status"
 def overwrite_status():
