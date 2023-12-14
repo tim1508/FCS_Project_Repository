@@ -73,6 +73,7 @@ smtp_port = 587
 smtp_username = 'hsgreportingtool@gmail.com'
 smtp_password = 'bjtp jmtf omrc tala'
 from_email = 'hsgreportingtool@gmail.com'
+# This feature was partly implemented through help from Tutorials and ChatGPT but we had to do the right implementation and troubleshooting by ourselves
 
 # Set up our first page "Submission Form"
 def submission_form():
@@ -190,6 +191,7 @@ Your HSG Service Team'''
         st.success("Confirmation Email Sent Successfully!")
     except Exception as e:
         st.error(f"An error occurred while sending the confirmation email: {str(e)}")
+# This feature was partly implemented through help from Tutorials and ChatGPT but we had to do the right implementation and troubleshooting by ourselves
 
 # Set up our second page "Submitted Issues"
 def submitted_issues():
@@ -411,6 +413,10 @@ Your HSG Service Team'''
         ''', (new_status, submission_time, selected_issue_id))
         conn.commit()
         st.success("Status Updated Successfully!")
+# This feature was partly implemented through help from Tutorials and ChatGPT but we had to do the right implementation and troubleshooting by ourselves
+# For example first this email didn't get send, there always was something wrong with getting the information (hsg_email) from the dataframe but never a real error occured just they email didn't go out
+# Then we went to the coaching but at the end the problem wasn't solved at all. So we had to spend much time thinking of a new way to do it. We came up with the idea to insert a textbox which gets the name and email out of the dataframe
+# Finally the email sending feature now gets its information from these textboxes and so it works :)
         
 # Defining the main() function at the end allows for a more organized structure where all the functions and code specific to the script's functionality are defined first, and the main execution logic is separated at the end. It also makes it easier to read and understand the flow of the script.
 # This pattern is used to enhance code readability, maintainability, and to ensure that the code inside the main() function is executed only when the script is run directly and not when it's imported as a module elsewhere.
