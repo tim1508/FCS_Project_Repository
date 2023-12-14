@@ -1,4 +1,5 @@
 # Group 6.2
+# Fadri, Tim, Nick, Liam, Tibauld, Gabriel, Fabio, Malte, Sean, Yanick
 
 # This is our Streamlit application for the HSG Reporting Tool. We worked the last six weeks on this code for our Computer Science Group Project.
 # Our tool solves the problem of facility issues on the HSG campus. You can just submit your issue through our Streamlit application and it gets stored in a database.
@@ -7,6 +8,10 @@
 # Our app is accessible via https://groupsixpointtwo.streamlit.app/
 
 # Please make sure to submit an issue on the first page so a database can be created on your device. Otherwise the second page will raise an error for the charts.
+# Additionally you need the HSG logo downloaded and named HSG-logo-new.png
+
+# Information just for Facility Management Team and Computer Science Course Team:
+# The Password for the third page "Overwrite Status" is Group6.2 (see line 336)
 
 import pandas as pd # Added for tables
 import sqlite3 # Added for database
@@ -20,8 +25,8 @@ import streamlit as st # Added for Streamlit
 
 
 # Create a SQLite database connection
-conn = sqlite3.connect('hsg_reporting.db')
-c = conn.cursor()
+con = sqlite3.connect('hsg_reporting.db')
+c = con.cursor()
 
 # Implement correct time zone
 st.time_zone = 'Europe/Zurich'
@@ -40,7 +45,7 @@ c.execute('''
         user_comment TEXT 
     )
 ''')
-conn.commit()
+con.commit()
 
 # insert HSG logo on top of the page with spaces afterwards
 image_path = "HSG-logo-new.png"
@@ -50,7 +55,7 @@ st.write("")
 st.write("")
 
 # Check whether the specified email address complies with the requirements of an official HSG mail address
-def is_valid_email(hsg_email):
+def valid_email(hsg_email):
     if hsg_email:
         hsg_email_pattern = r'^[\w.]+@(student\.)?unisg\.ch$'
         match = re.match(hsg_email_pattern, hsg_email)
@@ -59,7 +64,7 @@ def is_valid_email(hsg_email):
         return True
     
 # Check whether the specified room number complies with the correct format required by HSG
-def is_valid_room_number(room_number):
+def valid_room_number(room_number):
     if room_number:
         room_number_pattern = r'^[A-Z] \d{2}-\d{3}$'
         match = re.match(room_number_pattern, room_number)
@@ -84,7 +89,7 @@ def submission_form():
     hsg_email = st.text_input("HSG Email Address:")
 
     # Function returns  an error when the mail address is invalid
-    if not is_valid_email(hsg_email):
+    if not valid_email(hsg_email):
         st.error("Invalid mail address. Please check that you have entered your HSG mail address correctly.")
 
     # Implement the File uploader for photos
@@ -97,8 +102,8 @@ def submission_form():
     # Insert room number input
     room_number = st.text_input("Room Number:")
 
-    # Returning an error when the room number format is invalid
-    if not is_valid_room_number(room_number):
+    # Returning an error when the room number pattern is invalid
+    if not valid_room_number(room_number):
         st.error("Invalid room number format. Please enter a room number in the format 'A 09-001'.") 
 
     # Maze Map with a fixed focus on the University of St. Gallen (Campus_ID = 710)
@@ -132,7 +137,7 @@ def submission_form():
         # Checking if all required fields are filled out, collecting information about issues
         all_fields_filled = all([name, hsg_email, room_number, issue_type_selected, user_comment])
 
-        if all_fields_filled and is_valid_email(hsg_email):
+        if all_fields_filled and valid_email(hsg_email):
             selected_issue_types = []
             if lighting_issues:
                 selected_issue_types.append("Lighting issues")
@@ -149,17 +154,19 @@ def submission_form():
             issue_types = ', '.join(selected_issue_types)
 
             # Implement 'Europe/Zurich' as the standard time zone for the application
+            # We had to implement it again because first it was always CET
             desired_time_zone = pytz.timezone('Europe/Zurich')
 
             # Implement datetime.now() with the selected time zone (Zurich)
             submission_time = datetime.now(desired_time_zone).strftime("%Y-%m-%d %H:%M:%S")
+            # Found this solution through Tutorials
 
             # Import data to the database
             c.execute('''
                 INSERT INTO submissions (name, hsg_email, issue_type, room_number, importance, submission_time, user_comment)
                 VALUES (?, ?, ?, ?, ?, ?, ?)
             ''', (name, hsg_email, issue_types, room_number, importance, submission_time, user_comment))
-            conn.commit()
+            con.commit()
 
             # Send confirmation email to the submitter
             send_confirmation_email(hsg_email, name)
@@ -198,7 +205,7 @@ def submitted_issues():
     st.header("Submitted Issues")
 
     # Retrieve submitted data from the database
-    submitted_data = pd.read_sql('SELECT * FROM submissions', conn)
+    submitted_data = pd.read_sql('SELECT * FROM submissions', con)
 
     # Count total issues
     total_issues = len(submitted_data)
@@ -208,7 +215,6 @@ def submitted_issues():
     
     # Sort the issues by issue type and importance
     submitted_data = submitted_data.sort_values(by=['issue_type', 'importance'], ascending=[True, False])
-    
 
     # Change column names for optimal visualisation
     submitted_data = submitted_data.rename(columns={
@@ -344,7 +350,7 @@ def overwrite_status():
 
     # Continue with the rest of the function if the correct password is entered
     # Retrieve submitted data from the database
-    submitted_data = pd.read_sql('SELECT * FROM submissions', conn)
+    submitted_data = pd.read_sql('SELECT * FROM submissions', con)
 
     # Check if the DataFrame is empty
     if submitted_data.empty:
@@ -370,10 +376,12 @@ def overwrite_status():
     # When "Update Status" button is clicked
     if st.button("Update Status"):
         # Implement 'Europe/Zurich' as the standard time zone for the application
+        # We had to implement it again because first it was always CET
         desired_time_zone = pytz.timezone('Europe/Zurich')
 
         # Implement datetime.now() with the selected time zone (Zurich)
         submission_time = datetime.now(desired_time_zone).strftime("%Y-%m-%d %H:%M:%S")
+        # Found this solution through Tutorials
 
         # Ask for confirmation before updating status to "Resolved"
         if new_status == 'Resolved':
@@ -411,7 +419,7 @@ Your HSG Service Team'''
             SET status = ?, submission_time = ?
             WHERE id = ?
         ''', (new_status, submission_time, selected_issue_id))
-        conn.commit()
+        con.commit()
         st.success("Status Updated Successfully!")
 # This feature was partly implemented through help from Tutorials and ChatGPT but we had to do the right implementation and troubleshooting by ourselves
 # For example this email wasn't sent at first, there was always something wrong with getting the information (hsg_email) from the dataframe but never a real error occured just the email wasn't sent
