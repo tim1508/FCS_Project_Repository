@@ -73,7 +73,7 @@ smtp_port = 587
 smtp_username = 'hsgreportingtool@gmail.com'
 smtp_password = 'bjtp jmtf omrc tala'
 from_email = 'hsgreportingtool@gmail.com'
-# This feature was partly implemented through help from Tutorials and ChatGPT but we had to do the right implementation and troubleshooting by ourselves
+# This feature was partly implemented through help of tutorials and ChatGPT but we had to do the right implementation and troubleshooting by ourselves
 
 # Set up our first page "Submission Form"
 def submission_form():
@@ -97,7 +97,7 @@ def submission_form():
     # Room number input
     room_number = st.text_input("Room Number:")
 
-    # Returning an error when the room number is invalid
+    # Returning an error when the room number format is invalid
     if not is_valid_room_number(room_number):
         st.error("Invalid room number format. Please enter a room number in the format 'A 09-001'.") 
 
@@ -122,7 +122,7 @@ def submission_form():
     # Importance dropdown menu
     importance = st.selectbox("Importance:", ['Low', 'Medium', 'High'])
     
-    # Comment box
+    # Comment box for problem description
     user_comment = st.text_area("Problem Description:", max_chars=500)
 
     # When "Submit" button is clicked
@@ -169,7 +169,7 @@ def submission_form():
             # Error if not all fields are filled out
             st.error("Please fill in all required fields and select at least one issue type.")
 
-# Function to send confirmation email
+# Function to send the confirmation email
 def send_confirmation_email(recipient_email, recipient_name):
     subject = 'Issue received!'
     body = f'''Dear {recipient_name},
