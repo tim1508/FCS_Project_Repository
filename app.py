@@ -23,7 +23,7 @@ import streamlit as st # Added for Streamlit
 conn = sqlite3.connect('hsg_reporting.db')
 c = conn.cursor()
 
-# Insert correct time zone
+# Implement correct time zone
 st.time_zone = 'Europe/Zurich'
 
 # Create a table to store submitted data
@@ -58,7 +58,7 @@ def is_valid_email(hsg_email):
     else:
         return True
     
-# Check whether the specified room number has the correct format of HSG
+# Check whether the specified room number has the correct format required by HSG
 def is_valid_room_number(room_number):
     if room_number:
         room_number_pattern = r'^[A-Z] \d{2}-\d{3}$'
@@ -75,7 +75,7 @@ smtp_password = 'bjtp jmtf omrc tala'
 from_email = 'hsgreportingtool@gmail.com'
 # This feature was partly implemented through help of tutorials and ChatGPT but we had to do the right implementation and troubleshooting by ourselves
 
-# Set up our first page "Submission Form"
+# Set up our first page name:"Submission Form"
 def submission_form():
     st.header("Submission Form")
 
@@ -83,11 +83,11 @@ def submission_form():
     name = st.text_input("Name:")
     hsg_email = st.text_input("HSG Email Address:")
 
-    # Returning an error when the mail address is invalid
+    # Function returns  an error when the mail address is invalid
     if not is_valid_email(hsg_email):
         st.error("Invalid mail address. Please check that you have entered your HSG mail address correctly.")
 
-    # File uploader for photos
+    # Implement the File uploader for photos
     uploaded_file = st.file_uploader("Upload a Photo:", type=["jpg", "jpeg", "png"])
 
     # Display the uploaded folder
@@ -110,7 +110,7 @@ def submission_form():
             scrolling="no"></iframe>
     """, unsafe_allow_html=True)
 
-    # Issue Type checkboxes
+    # Implement the different Issue Types with checkboxes
     st.subheader("Issue Type:")
     lighting_issues = st.checkbox("Lighting issues")
     sanitary_problems = st.checkbox("Sanitary problems")
@@ -119,10 +119,10 @@ def submission_form():
     network_internet_problems = st.checkbox("Network/internet problems")
     it_equipment = st.checkbox("Issues with/lack of IT equipment")
     
-    # Importance dropdown menu
+    # Include the Importance selection with a dropdown menu
     importance = st.selectbox("Importance:", ['Low', 'Medium', 'High'])
     
-    # Comment box for problem description
+    # Configuration of Comment box for problem description
     user_comment = st.text_area("Problem Description:", max_chars=500)
 
     # When "Submit" button is clicked
