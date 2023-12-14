@@ -26,7 +26,7 @@ c = conn.cursor()
 # Implement correct time zone
 st.time_zone = 'Europe/Zurich'
 
-# Create a table to store submitted data
+# Create a table to store submitted data with required information
 c.execute('''
     CREATE TABLE IF NOT EXISTS submissions (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -42,14 +42,14 @@ c.execute('''
 ''')
 conn.commit()
 
-# HSG logo on top of the page with spaces afterwards
+# insert HSG logo on top of the page with spaces afterwards
 image_path = "HSG-logo-new.png"
 st.image(image_path, use_column_width=True)
 st.write("")
 st.write("")
 st.write("")
 
-# Check whether the specified email address is a real HSG mail address
+# Check whether the specified email address complies with the requirements of an official HSG mail address
 def is_valid_email(hsg_email):
     if hsg_email:
         hsg_email_pattern = r'^[\w.]+@(student\.)?unisg\.ch$'
@@ -58,7 +58,7 @@ def is_valid_email(hsg_email):
     else:
         return True
     
-# Check whether the specified room number has the correct format required by HSG
+# Check whether the specified room number complies with the correct format required by HSG
 def is_valid_room_number(room_number):
     if room_number:
         room_number_pattern = r'^[A-Z] \d{2}-\d{3}$'
@@ -67,7 +67,7 @@ def is_valid_room_number(room_number):
     else:
         return True
     
-# Global variables for email configuration
+# Global variables for email configuration to ensure e-mail configuration functioning
 smtp_server = 'smtp.gmail.com'
 smtp_port = 587
 smtp_username = 'hsgreportingtool@gmail.com'
@@ -94,7 +94,7 @@ def submission_form():
     if uploaded_file is not None:
         st.image(uploaded_file, caption="Uploaded Photo", use_column_width=True)
 
-    # Room number input
+    # Insert room number input
     room_number = st.text_input("Room Number:")
 
     # Returning an error when the room number format is invalid
@@ -122,14 +122,14 @@ def submission_form():
     # Include the Importance selection with a dropdown menu
     importance = st.selectbox("Importance:", ['Low', 'Medium', 'High'])
     
-    # Configuration of Comment box for problem description
+    # Configuration of Comment box for problem description for detailed problem description
     user_comment = st.text_area("Problem Description:", max_chars=500)
 
     # When "Submit" button is clicked
     if st.button("Submit"):
         # Checking that at least one issue type is selected
         issue_type_selected = lighting_issues or sanitary_problems or havc_issues or cleaning_needs or network_internet_problems or it_equipment
-        # Checking if all required fields are filled out
+        # Checking if all required fields are filled out, collecting information about issues
         all_fields_filled = all([name, hsg_email, room_number, issue_type_selected, user_comment])
 
         if all_fields_filled and is_valid_email(hsg_email):
@@ -166,7 +166,7 @@ def submission_form():
         
             st.success("Submission Successful!")
         else:
-            # Error if not all fields are filled out
+            # Raise an Error if not all fields are filled out
             st.error("Please fill in all required fields and select at least one issue type.")
 
 # Function to send the confirmation email
@@ -193,7 +193,7 @@ Your HSG Service Team'''
         st.error(f"An error occurred while sending the confirmation email: {str(e)}")
 # This feature was partly implemented through help from Tutorials and ChatGPT but we had to do the right implementation and troubleshooting by ourselves
 
-# Set up our second page with name: "Submitted Issues"
+# Set up our second page with name: "Submitted Issues" to display the submitted issues
 def submitted_issues():
     st.header("Submitted Issues")
 
