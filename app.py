@@ -1,12 +1,12 @@
 # Group 6.2
 
 # This is our Streamlit application for the HSG Reporting Tool. We worked the last six weeks on this code for our Computer Science Group Project.
-# Our tool solves the problem of facility issues at the HSG Campus. You can just submit your issue through our Streamlit application and it gets stored in a database.
+# Our tool solves the problem of facility issues on the HSG campus. You can just submit your issue through our Streamlit application and it gets stored in a database.
 # It is even possible for the facility management team to overwrite the status of the submitted issues. Therefore this application has a real use case!
 
 # Our app is accessible via https://groupsixpointtwo.streamlit.app/
 
-# Please make sure to submit an issue on the first page so a database can be created on your laptop otherwise the second page will raise an error for the charts
+# Please make sure to submit an issue on the first page so a database can be created on your device. Otherwise the second page will raise an error for the charts.
 
 import pandas as pd # Added for tables
 import sqlite3 # Added for database
@@ -42,7 +42,7 @@ c.execute('''
 ''')
 conn.commit()
 
-# HSG Logo on top of the page with spaces afterwards
+# HSG logo on top of the page with spaces afterwards
 image_path = "HSG-logo-new.png"
 st.image(image_path, use_column_width=True)
 st.write("")
@@ -414,8 +414,8 @@ Your HSG Service Team'''
         conn.commit()
         st.success("Status Updated Successfully!")
 # This feature was partly implemented through help from Tutorials and ChatGPT but we had to do the right implementation and troubleshooting by ourselves
-# For example first this email didn't get send, there always was something wrong with getting the information (hsg_email) from the dataframe but never a real error occured just they email didn't go out
-# Then we went to the coaching but at the end the problem wasn't solved at all. So we had to spend much time thinking of a new way to do it. We came up with the idea to insert a textbox which gets the name and email out of the dataframe
+# For example this email wasn't sent at first, there was always something wrong with getting the information (hsg_email) from the dataframe but never a real error occured just the email wasn't sent
+# Then we went to the coaching but at the end the problem wasn't solved at all. So we had to spend much time thinking of a new way to do it. We came up with the idea to insert a textbox, which gets the name and email out of the dataframe
 # Finally the email sending feature now gets its information from these textboxes and so it works :)
         
 # Defining the main() function at the end allows for a more organized structure where all the functions and code specific to the script's functionality are defined first, and the main execution logic is separated at the end. It also makes it easier to read and understand the flow of the script.
