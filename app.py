@@ -193,7 +193,7 @@ Your HSG Service Team'''
         st.error(f"An error occurred while sending the confirmation email: {str(e)}")
 # This feature was partly implemented through help from Tutorials and ChatGPT but we had to do the right implementation and troubleshooting by ourselves
 
-# Set up our second page "Submitted Issues"
+# Set up our second page with name: "Submitted Issues"
 def submitted_issues():
     st.header("Submitted Issues")
 
@@ -210,7 +210,7 @@ def submitted_issues():
     submitted_data = submitted_data.sort_values(by=['issue_type', 'importance'], ascending=[True, False])
     
 
-    # Change column names
+    # Change column names for optimal visualisation
     submitted_data = submitted_data.rename(columns={
         'name': 'NAME',
         'hsg_email': 'HSG MAIL ADDRESS',
@@ -326,16 +326,16 @@ def submitted_issues():
 
     st.pyplot(fig)
 
-# Set a password for accessing the "Overwrite Status" page
+# Set a password for accessing safely the "Overwrite Status" page
 correct_password = "Group6.2"
 
-# Set up our third page "Overwrite Status"
+# Set up our third page with name: "Overwrite Status"
 def overwrite_status():
     global smtp_server, smtp_port, smtp_username, smtp_password, from_email
 
     st.header("Overwrite Status")
 
-    # Password protection for the "Overwrite Status" page
+    # Implement Password protection for the "Overwrite Status" page to restrict access
     entered_password = st.sidebar.text_input("Enter Password", "", type="password")
 
     if entered_password != correct_password:
