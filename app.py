@@ -82,7 +82,7 @@ from_email = 'hsgreportingtool@gmail.com'
 
 # Set up our first page name:"Submission Form"
 def submission_form():
-    st.header("Submission Form")
+    st.header("Submission Form 2")
 
     # Get user input for the submission form
     name = st.text_input("Name:")
